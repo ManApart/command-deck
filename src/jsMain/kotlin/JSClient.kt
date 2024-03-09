@@ -23,7 +23,7 @@ import views.welcomeView
 
 lateinit var webSocket: WebSocket
 
-val jsonMapper = kotlinx.serialization.json.Json {
+val jsonMapper = Json {
     ignoreUnknownKeys = true
     encodeDefaults = false
 }

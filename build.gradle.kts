@@ -59,7 +59,7 @@ kotlin {
                 implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
                 implementation("io.ktor:ktor-server-websockets-jvm:$ktorVersion")
                 implementation("io.ktor:ktor-server-netty:$ktorVersion")
-                implementation("org.slf4j:slf4j-nop:2.0.12")
+                implementation("ch.qos.logback:logback-classic:1.5.3")
 
             }
         }

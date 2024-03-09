@@ -1,6 +1,6 @@
 package views
 
-import frames.ServerInfoFrame
+import frames.messageFrame
 import jsonMapper
 import kotlinx.html.id
 import kotlinx.html.js.*
@@ -23,8 +23,9 @@ fun welcomeView(){
             button {
                 +"Send Ping"
                 onClickFunction = {
-//                    webSocket.send("Test Ping at ${Date().getMilliseconds()}!")
-                    webSocket.send(jsonMapper.encodeToString(ServerInfoFrame("123", 0)))
+                    val data = jsonMapper.encodeToString(messageFrame("Test Ping at ${Date().getMilliseconds()}!"))
+                    println(data)
+                    webSocket.send(data)
                 }
             }
         }
