@@ -18,5 +18,6 @@ private fun MessageFrame.receive() {
     println("Server said: $message")
 }
 private fun ServerInfoFrame.receive() {
-    el<HTMLElement>("ip-display").innerText = ipAddress
+    playerState.id = playerId
+    el<HTMLElement>("ip-display").innerText = url
 }

@@ -73,7 +73,7 @@ fun main() {
                             ip = datagramSocket.localAddress.hostAddress
                         }
                         val url = "http://${ip}:$usedPort"
-                        sendSerialized(ServerInfoFrame(url, connections.count()) as WSFrame)
+                        sendSerialized(ServerInfoFrame(url, thisConnection.name,  connections.count()) as WSFrame)
                         for (frame in incoming) {
                             frame as? Frame.Text ?: continue
                             jsonMapper.decodeFromString<WSFrame>(frame.readText()).parse(thisConnection)

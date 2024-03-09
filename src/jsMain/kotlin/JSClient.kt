@@ -18,16 +18,18 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.WebSocket
-import views.welcomeView
+import views.readyRoomView
 
 lateinit var webSocket: WebSocket
+
+val gameState = GameState()
+val playerState = PlayerState()
 
 fun wsSend(frame: WSFrame){
     val data = jsonMapper.encodeToString(frame)
     println(data)
     webSocket.send(data)
 }
-
 
 val jsonMapper = Json {
     ignoreUnknownKeys = true
@@ -46,7 +48,7 @@ val client = HttpClient {
 
 fun main() {
     window.onload = {
-        welcomeView()
+        readyRoomView()
         CoroutineScope(Dispatchers.Default).launch {
             webSocket = WebSocket("ws://127.0.0.1:9090/chat").apply {
                 onmessage = {

@@ -33,7 +33,7 @@ kotlin {
                 }
             }
             runTask {
-                devServer = devServer?.copy(port = 3000)
+                devServer = devServer?.copy(port = 3001 )
             }
         }
     }
