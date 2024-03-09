@@ -66,6 +66,7 @@ kotlin {
         val jvmTest by getting
         val jsMain by getting {
             dependencies {
+                implementation("io.ktor:ktor-serialization:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-html-js:0.8.0")
                 implementation("io.ktor:ktor-client-js:$ktorVersion")
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")

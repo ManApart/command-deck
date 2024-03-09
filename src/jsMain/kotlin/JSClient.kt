@@ -2,6 +2,7 @@ import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.websocket.*
 import kotlinx.browser.document
@@ -15,15 +16,22 @@ import kotlinx.dom.createElement
 import kotlinx.html.TagConsumer
 import kotlinx.html.dom.append
 import kotlinx.html.js.h2
+import kotlinx.serialization.json.Json
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.WebSocket
 import views.welcomeView
 
 lateinit var webSocket: WebSocket
 
+val jsonMapper = kotlinx.serialization.json.Json {
+    ignoreUnknownKeys = true
+    encodeDefaults = false
+}
+
 val client = HttpClient {
     install(WebSockets) {
         pingInterval = 20_000
+        contentConverter = KotlinxWebsocketSerializationConverter(Json)
     }
     install(ContentNegotiation) {
         json()

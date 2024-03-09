@@ -1,4 +1,6 @@
+import frames.ServerInfoFrame
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
@@ -10,6 +12,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
+import kotlinx.serialization.json.Json
 import java.time.Duration
 import java.util.*
 import kotlin.collections.LinkedHashSet
@@ -34,6 +37,7 @@ fun main() {
                 timeout = Duration.ofSeconds(15)
                 maxFrameSize = Long.MAX_VALUE
                 masking = false
+                contentConverter = KotlinxWebsocketSerializationConverter(Json)
             }
             routing {
                 get("/") {
@@ -51,9 +55,11 @@ fun main() {
                     val thisConnection = Connection(this)
                     connections += thisConnection
                     try {
-                        send("You are connected! There are ${connections.count()} users here.")
+//                        send("You are connected! There are ${connections.count()} users here.")
+                        sendSerialized(ServerInfoFrame("123", connections.count()))
                         for (frame in incoming) {
                             frame as? Frame.Text ?: continue
+                            //TODO -deserialize
                             val receivedText = frame.readText()
                             val textWithUsername = "[${thisConnection.name}]: $receivedText"
                             println(textWithUsername)
