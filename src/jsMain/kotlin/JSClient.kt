@@ -13,6 +13,7 @@ import kotlinx.dom.addClass
 import kotlinx.dom.createElement
 import kotlinx.html.TagConsumer
 import kotlinx.html.dom.append
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.w3c.dom.HTMLElement
@@ -50,6 +51,9 @@ fun main() {
             webSocket = WebSocket("ws://127.0.0.1:9090/chat").apply {
                 onmessage = {
                     println("Received ${it.data}")
+                    CoroutineScope(Dispatchers.Default).launch {
+                        jsonMapper.decodeFromString<WSFrame>(it.data as String).parse()
+                    }
                 }
             }
         }

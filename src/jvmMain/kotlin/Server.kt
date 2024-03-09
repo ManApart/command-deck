@@ -1,7 +1,6 @@
 import frames.ServerInfoFrame
 import frames.WSFrame
 import io.ktor.http.*
-import io.ktor.serialization.*
 import io.ktor.serialization.kotlinx.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -16,8 +15,11 @@ import io.ktor.server.websocket.*
 import io.ktor.websocket.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import java.net.DatagramSocket
+import java.net.InetAddress
 import java.time.Duration
 import java.util.*
+
 
 val connections = Collections.synchronizedSet<Connection?>(LinkedHashSet())
 
@@ -64,7 +66,14 @@ fun main() {
                     val thisConnection = Connection(this)
                     connections += thisConnection
                     try {
-                        sendSerialized(ServerInfoFrame("123", connections.count()))
+
+                        var ip = ""
+                        DatagramSocket().use { datagramSocket ->
+                            datagramSocket.connect(InetAddress.getByName("8.8.8.8"), 12345)
+                            ip = datagramSocket.localAddress.hostAddress
+                        }
+                        val url = "http://${ip}:$usedPort"
+                        sendSerialized(ServerInfoFrame(url, connections.count()) as WSFrame)
                         for (frame in incoming) {
                             frame as? Frame.Text ?: continue
                             jsonMapper.decodeFromString<WSFrame>(frame.readText()).parse(thisConnection)
