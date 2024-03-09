@@ -1,6 +1,7 @@
 import frames.ServerInfoFrame
 import frames.WSFrame
 import io.ktor.http.*
+import io.ktor.serialization.*
 import io.ktor.serialization.kotlinx.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -13,6 +14,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import java.time.Duration
 import java.util.*
@@ -65,10 +67,7 @@ fun main() {
                         sendSerialized(ServerInfoFrame("123", connections.count()))
                         for (frame in incoming) {
                             frame as? Frame.Text ?: continue
-                            println("Receiving frame $frame")
-                            val wrapper = receiveDeserialized<WSFrame>()
-                            println("Wrapper: $wrapper")
-                            wrapper.parse(thisConnection)
+                            jsonMapper.decodeFromString<WSFrame>(frame.readText()).parse(thisConnection)
                         }
                     } catch (e: Exception) {
                         println(e.localizedMessage)
