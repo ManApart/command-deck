@@ -22,12 +22,11 @@ import views.readyRoomView
 
 lateinit var webSocket: WebSocket
 
-val gameState = GameState()
 val playerState = PlayerState()
 
 fun wsSend(frame: WSFrame){
     val data = jsonMapper.encodeToString(frame)
-    println(data)
+    println("sending: $data")
     webSocket.send(data)
 }
 
@@ -50,9 +49,8 @@ fun main() {
     window.onload = {
         readyRoomView()
         CoroutineScope(Dispatchers.Default).launch {
-            webSocket = WebSocket("ws://127.0.0.1:9090/chat").apply {
+            webSocket = WebSocket("ws://127.0.0.1:9090/game").apply {
                 onmessage = {
-                    println("Received ${it.data}")
                     CoroutineScope(Dispatchers.Default).launch {
                         jsonMapper.decodeFromString<WSFrame>(it.data as String).parse()
                     }

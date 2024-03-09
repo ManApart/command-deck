@@ -1,3 +1,4 @@
+import frames.ReadyRoomUpdate
 import frames.ServerInfoFrame
 import frames.WSFrame
 import io.ktor.http.*
@@ -61,7 +62,7 @@ fun main() {
                     resources("")
                 }
 
-                webSocket("/chat") {
+                webSocket("/game") {
                     println("Adding user!")
                     val thisConnection = Connection(this)
                     connections += thisConnection
@@ -73,7 +74,8 @@ fun main() {
                             ip = datagramSocket.localAddress.hostAddress
                         }
                         val url = "http://${ip}:$usedPort"
-                        sendSerialized(ServerInfoFrame(url, thisConnection.name,  connections.count()) as WSFrame)
+                        sendSerialized(ServerInfoFrame(url, thisConnection.playerId,  connections.count()) as WSFrame)
+                        sendSerialized(ReadyRoomUpdate(mapOf()) as WSFrame)
                         for (frame in incoming) {
                             frame as? Frame.Text ?: continue
                             jsonMapper.decodeFromString<WSFrame>(frame.readText()).parse(thisConnection)
@@ -90,4 +92,11 @@ fun main() {
     }
 
     embeddedServer(Netty, environment).start(wait = true)
+}
+
+
+suspend fun sendAll(wsFrame: WSFrame){
+    connections.forEach {
+        it.session.sendSerialized(wsFrame)
+    }
 }
