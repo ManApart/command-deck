@@ -1,0 +1,14 @@
+:root {
+  --white: #fbf5ef;
+  --bright: #fbbbad;
+  --highlight: #ee8695;
+  --action: #4a7a96;
+  --background: #333f58;
+  --dark-background: #292831;
+}
+
+body {
+    background-color: var(--dark-background);
+    color: white;
+}
+
