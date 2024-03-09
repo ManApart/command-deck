@@ -1,5 +1,5 @@
-import frames.FrameWrapper
-import frames.serverInfoFrame
+import frames.ServerInfoFrame
+import frames.WSFrame
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.*
 import io.ktor.serialization.kotlinx.json.*
@@ -16,7 +16,6 @@ import io.ktor.websocket.*
 import kotlinx.serialization.json.Json
 import java.time.Duration
 import java.util.*
-import kotlin.collections.LinkedHashSet
 
 val connections = Collections.synchronizedSet<Connection?>(LinkedHashSet())
 
@@ -63,11 +62,11 @@ fun main() {
                     val thisConnection = Connection(this)
                     connections += thisConnection
                     try {
-                        sendSerialized(serverInfoFrame("123", connections.count()))
+                        sendSerialized(ServerInfoFrame("123", connections.count()))
                         for (frame in incoming) {
                             frame as? Frame.Text ?: continue
                             println("Receiving frame $frame")
-                            val wrapper = receiveDeserialized<FrameWrapper>()
+                            val wrapper = receiveDeserialized<WSFrame>()
                             println("Wrapper: $wrapper")
                             wrapper.parse(thisConnection)
                         }

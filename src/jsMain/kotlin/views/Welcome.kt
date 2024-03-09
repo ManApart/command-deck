@@ -1,12 +1,10 @@
 package views
 
-import frames.messageFrame
-import jsonMapper
+import frames.MessageFrame
 import kotlinx.html.id
 import kotlinx.html.js.*
-import kotlinx.serialization.encodeToString
 import replaceElement
-import webSocket
+import wsSend
 import kotlin.js.Date
 
 fun welcomeView(){
@@ -23,9 +21,7 @@ fun welcomeView(){
             button {
                 +"Send Ping"
                 onClickFunction = {
-                    val data = jsonMapper.encodeToString(messageFrame("Test Ping at ${Date().getMilliseconds()}!"))
-                    println(data)
-                    webSocket.send(data)
+                    wsSend(MessageFrame("Test Ping at ${Date().getMilliseconds()}!"))
                 }
             }
         }

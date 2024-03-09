@@ -1,14 +1,14 @@
-import frames.FrameType
-import frames.FrameWrapper
 import frames.MessageFrame
-import frames.messageFrame
+import frames.WSFrame
 import io.ktor.server.websocket.*
 
-suspend fun FrameWrapper.parse(connection: Connection) {
+suspend fun WSFrame.parse(connection: Connection) {
     println("Parsing frame $this")
-    when (type) {
-        FrameType.MESSAGE -> (data as MessageFrame).receive(connection)
-        else -> {}
+    when (this) {
+        is MessageFrame -> receive(connection)
+        else -> {
+            println("Did not recognize $this")
+        }
     }
 }
 
@@ -16,6 +16,6 @@ private suspend fun MessageFrame.receive(connection: Connection) {
     val textWithUsername = "[${connection.name}]: Pinged with message: $message"
     println(textWithUsername)
     connections.forEach {
-        it.session.sendSerialized(messageFrame(textWithUsername))
+        it.session.sendSerialized(MessageFrame(textWithUsername))
     }
 }
