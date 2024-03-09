@@ -1,3 +1,6 @@
+@font-face { font-family: Montserrat; src: url('/assets/Montserrat-Regular.ttf'); }
+@font-face { font-family: JetBrainsMono; src: url('/assets/JetBrainsMono-Regular.ttf'); }
+
 :root {
   --white: #fbf5ef;
   --bright: #fbbbad;
@@ -10,6 +13,7 @@
 body {
     background-color: var(--dark-background);
     color: white;
+    font-family: Montserrat, sans-serif;
 }
 
 .switch {
@@ -17,6 +21,8 @@ body {
   display: inline-block;
   width: 60px;
   height: 34px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .switch input {
@@ -63,6 +69,18 @@ input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
+}
+
+#role-select{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.crew-role-select {
+    background-color: var(--action);
+    padding: 20px;
+    margin: 10px;
+    border: 10px solid transparent;
 }
 
 .unavailable {

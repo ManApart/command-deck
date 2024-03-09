@@ -20,7 +20,7 @@ fun readyRoomView() {
     replaceElement {
         div {
             h1 { +"Welcome to Command Deck" }
-            p {
+            h3 {
                 +"Your crew can join by going to "
                 code {
                     id = "ip-display"
@@ -28,6 +28,7 @@ fun readyRoomView() {
                 }
             }
             div {
+                span { +"Designation: " }
                 input {
                     id = "username"
                     placeholder = "Your Name"
@@ -40,6 +41,8 @@ fun readyRoomView() {
                 CrewRole.entries.forEach { role ->
                     button(classes = "crew-role-select") {
                         id = "select-${role.name}"
+                        style = "background-color: ${role.color};"
+
                         +role.name.split("_").joinToString(" ") { it.lowercase().capitalize() }
                         onClickFunction = {
                             if (role != playerState.role) {
