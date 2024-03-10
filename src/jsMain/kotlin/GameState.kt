@@ -5,13 +5,11 @@ import frames.initialRooms
 
 object GameState {
     var shipName = "Prometheus"
-    val players = mutableMapOf<String, Player>()
-    val rooms = mutableMapOf<String, Room>()
+    var players = mapOf<String, Player>()
+    var rooms = mapOf<String, Room>()
 
     init {
-        //Eventually load these from a ship file etc
-        rooms.clear()
-        initialRooms().forEach { rooms[it.name] = it }
+        initialRooms().associateBy {it.name}
     }
 
     fun roleOccupied(role: CrewRole) = players.values.any { it.role == role }

@@ -2,6 +2,7 @@ package views
 
 import el
 import frames.CrewRole
+import frames.GameStart
 import frames.ReadyRoomUpdate
 import frames.UserLoginFrame
 import kotlinx.browser.window
@@ -94,6 +95,11 @@ fun readyRoomView() {
                     button {
                         id = "start-mission"
                         +"Start Mission"
+                        onClickFunction = { startGame() }
+                    }
+                    span { +"Drop unready Players: " }
+                    input(InputType.checkBox) {
+                        id = "force-start"
                     }
                 }
             }
@@ -113,6 +119,16 @@ private fun updateRole() {
         unReady()
     } else {
         wsSend(UserLoginFrame(playerState.name, playerState.role))
+    }
+}
+
+private fun startGame() {
+    val shipName = el<HTMLInputElement>("ship-name").value
+    val forceStart = el<HTMLInputElement>("force-start").checked
+    if (shipName.isBlank()) {
+        window.alert("Your ship must be named before disembark")
+    } else {
+        wsSend(GameStart(shipName, mapOf(), mapOf(), forceStart))
     }
 }
 

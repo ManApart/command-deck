@@ -1,18 +1,18 @@
-import frames.MessageFrame
-import frames.ReadyRoomUpdate
-import frames.ServerInfoFrame
-import frames.WSFrame
+import frames.*
+import kotlinx.browser.window
 import kotlinx.html.div
 import kotlinx.html.unsafe
 import org.w3c.dom.HTMLElement
+import views.turboLiftView
 import views.updatedReadyRoom
 
 fun WSFrame.parse() {
     println("Parsing frame $this")
     when (this) {
-        is MessageFrame -> this.receive()
-        is ServerInfoFrame -> this.receive()
+        is MessageFrame -> receive()
+        is ServerInfoFrame -> receive()
         is ReadyRoomUpdate -> updatedReadyRoom(this)
+        is GameStart -> receive()
         else -> {
             println("Did not recognize $this")
         }
@@ -20,6 +20,7 @@ fun WSFrame.parse() {
 }
 
 private fun MessageFrame.receive() {
+    if (alert) window.alert(message)
     println("Server said: $message")
 }
 
@@ -33,4 +34,11 @@ private fun ServerInfoFrame.receive() {
             }
         }
     }
+}
+
+private fun GameStart.receive() {
+    GameState.shipName = shipName
+    GameState.rooms = rooms
+    GameState.players = players
+    turboLiftView()
 }
