@@ -22,10 +22,16 @@ fun readyRoomView() {
         div {
             h1 { +"Welcome to Command Deck" }
             h3 {
-                +"Your crew can join by going to "
+                +"Your crew can join by scanning or going to "
                 code {
                     id = "ip-display"
                     +"127.0.0.1"
+                }
+            }
+            div {
+                id = "qr-code-wrapper"
+                unsafe {
+                    +"""<qr-code id="qr-code" contents="https://bitjson.com"></qr-code>"""
                 }
             }
             div {

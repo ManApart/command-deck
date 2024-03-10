@@ -75,6 +75,13 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
+#qr-code{
+    background-color: white;
+    width: 200px;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
 #role-select{
     margin-top: 20px;
     margin-bottom: 20px;
