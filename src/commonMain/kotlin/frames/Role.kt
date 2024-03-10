@@ -10,4 +10,6 @@ enum class CrewRole(val color: String) {
     SECURITY("#91432f"),
     CREWMAN("#b4bed0"),
     STORY_TELLER("#5e2787"),
+    ;
+    fun cleanName() = name.split("_").joinToString(" ") { it.lowercase().capitalize() }
 }

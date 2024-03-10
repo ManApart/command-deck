@@ -75,7 +75,7 @@ fun main() {
                         }
                         val url = "http://${ip}:$usedPort"
                         sendSerialized(ServerInfoFrame(url, thisConnection.playerId,  connections.count()) as WSFrame)
-                        sendSerialized(ReadyRoomUpdate(mapOf()) as WSFrame)
+                        sendSerialized(ReadyRoomUpdate(GameState.players) as WSFrame)
                         for (frame in incoming) {
                             frame as? Frame.Text ?: continue
                             jsonMapper.decodeFromString<WSFrame>(frame.readText()).parse(thisConnection)
@@ -83,7 +83,8 @@ fun main() {
                     } catch (e: Exception) {
                         println(e.localizedMessage)
                     } finally {
-                        println("Removing $thisConnection!")
+                        println("Removing connection for ${thisConnection.playerId}!")
+                        GameState.players.remove(thisConnection.playerId)
                         connections -= thisConnection
                     }
                 }

@@ -15,4 +15,4 @@ data class MessageFrame(val message: String) : WSFrame
 data class UserLoginFrame(val name: String, val role: CrewRole) : WSFrame
 
 @Serializable
-data class ReadyRoomUpdate(val roles: Map<CrewRole, String>) : WSFrame
+data class ReadyRoomUpdate(val crew: Map<String, Player>) : WSFrame

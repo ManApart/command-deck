@@ -19,14 +19,13 @@ private suspend fun MessageFrame.receive(connection: Connection) {
 }
 
 private suspend fun UserLoginFrame.receive(connection: Connection) {
-    if (role != CrewRole.CREWMAN && GameState.roles.containsKey(role)) {
-        connection.session.sendSerialized(ReadyRoomUpdate(GameState.roles))
+    if (role != CrewRole.CREWMAN && GameState.roleOccupied(role)) {
+        connection.session.sendSerialized(ReadyRoomUpdate(GameState.players))
         return
     }
-    connection.playerName = name
-    GameState.roles.entries.filter { it.value == connection.playerId }.forEach { old ->
-        GameState.roles.remove(old.key)
-    }
-    GameState.roles[role] = connection.playerId
-    sendAll(ReadyRoomUpdate(GameState.roles))
+    GameState.players.putIfAbsent(connection.playerId, Player(connection.playerId, name))
+    GameState.players[connection.playerId]?.name = name
+    GameState.players[connection.playerId]?.role = role
+
+    sendAll(ReadyRoomUpdate(GameState.players))
 }

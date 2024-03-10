@@ -4,6 +4,7 @@ import el
 import frames.CrewRole
 import frames.ReadyRoomUpdate
 import frames.UserLoginFrame
+import kotlinx.browser.window
 import kotlinx.dom.addClass
 import kotlinx.dom.removeClass
 import kotlinx.html.*
@@ -43,7 +44,7 @@ fun readyRoomView() {
                         id = "select-${role.name}"
                         style = "background-color: ${role.color};"
 
-                        +role.name.split("_").joinToString(" ") { it.lowercase().capitalize() }
+                        +role.cleanName()
                         onClickFunction = {
                             if (role != playerState.role) {
                                 playerState.role = role
@@ -72,11 +73,22 @@ fun readyRoomView() {
                     span("slider") { }
                 }
             }
-            div {
-                button {
-                    id = "start-mission"
-                    hidden = true
-                    +"Start Mission"
+
+            div("hidden") {
+                id = "captain-options"
+                div {
+                    span { +"Ship Designation: " }
+                    input {
+                        id = "ship-name"
+                        placeholder = "Ship's Name"
+                        value = playerState.name
+                    }
+                }
+                div {
+                    button {
+                        id = "start-mission"
+                        +"Start Mission"
+                    }
                 }
             }
         }
@@ -90,34 +102,50 @@ private fun unReady() {
 
 private fun updateRole() {
     playerState.name = el<HTMLInputElement>("username").value
-    wsSend(UserLoginFrame(playerState.name, playerState.role))
+    if (playerState.name.isBlank()) {
+        window.alert("You must have a name to ready up!")
+        unReady()
+    } else {
+        wsSend(UserLoginFrame(playerState.name, playerState.role))
+    }
 }
 
 fun updatedReadyRoom(update: ReadyRoomUpdate) {
-    val newRole = update.roles.entries.firstOrNull { it.value == playerState.id }?.key ?: CrewRole.CREWMAN
-    if (playerState.role != newRole) {
-        playerState.role = newRole
-        unReady()
+    val updatedPlayer = update.crew[playerState.id]
+    if (updatedPlayer != null) {
+        if (playerState.role != updatedPlayer.role) {
+            playerState.role = updatedPlayer.role
+            unReady()
+        }
     }
 
     val buttons = CrewRole.entries.associateWith { el<HTMLButtonElement>("select-${it.name}") }
 
-    buttons.values.forEach { button ->
-        button.removeClass("confirmed")
-        button.removeClass("selected")
-        button.removeClass("unavailable")
-        button.disabled = false
+    buttons.entries.forEach { (role, button) ->
+        button.apply {
+            removeClass("confirmed")
+            removeClass("selected")
+            removeClass("unavailable")
+            disabled = false
+            innerText = role.cleanName()
+        }
     }
 
-    update.roles.entries.forEach { (role, id) ->
-        val button = el<HTMLButtonElement>("select-${role.name}")
-        if (playerState.id != id) {
+    update.crew.values.forEach { player ->
+        val button = el<HTMLButtonElement>("select-${player.role.name}")
+        button.innerText = "${player.role.cleanName()}: ${player.name}"
+        if (playerState.id != player.id) {
             button.addClass("unavailable")
             button.disabled = true
         } else {
             button.addClass("confirmed")
         }
     }
-    el<HTMLButtonElement>("start-mission").hidden = (playerState.role != CrewRole.CAPTAIN)
+
+    if (playerState.role != CrewRole.CAPTAIN) {
+        el<HTMLButtonElement>("captain-options").addClass("hidden")
+    } else {
+        el<HTMLButtonElement>("captain-options").removeClass("hidden")
+    }
 
 }

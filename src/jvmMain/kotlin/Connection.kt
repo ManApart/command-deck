@@ -6,5 +6,4 @@ class Connection(val session: WebSocketServerSession) {
         val lastId = AtomicInteger(0)
     }
     val playerId = "user${lastId.getAndIncrement()}"
-    var playerName = ""
 }
