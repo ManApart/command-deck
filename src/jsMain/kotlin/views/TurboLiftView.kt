@@ -7,8 +7,10 @@ import replaceElement
 
 fun turboLiftView(){
     replaceElement {
+        nav()
         div {
             h1 { +"The ${GameState.shipName}" }
+
         }
     }
 }

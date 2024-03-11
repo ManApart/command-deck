@@ -50,6 +50,9 @@ fun readyRoomView() {
                     button(classes = "crew-role-select") {
                         id = "select-${role.name}"
                         style = "background-color: ${role.color};"
+                        img(classes = "role-select-img") {
+                            src = "assets/icons/${role.name.lowercase()}.svg"
+                        }
 
                         +role.cleanName()
                         onClickFunction = {

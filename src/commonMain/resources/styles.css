@@ -94,6 +94,12 @@ input:checked + .slider:before {
     border: 10px solid transparent;
 }
 
+.role-select-img{
+    width: 40px;
+    display: block;
+    margin: auto;
+}
+
 .unavailable {
     border: 10px solid red;
 }
