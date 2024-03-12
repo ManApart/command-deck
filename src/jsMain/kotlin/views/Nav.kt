@@ -4,6 +4,7 @@ import kotlinx.html.TagConsumer
 import kotlinx.html.button
 import kotlinx.html.div
 import kotlinx.html.id
+import kotlinx.html.js.onClickFunction
 import org.w3c.dom.HTMLElement
 import playerState
 
@@ -16,9 +17,11 @@ fun TagConsumer<HTMLElement>.nav() {
         }
         button(classes = "nav-button") {
             +"Turbo Lift"
+            onClickFunction = { turboLiftView()}
         }
         button(classes = "nav-button") {
             +"Room"
+            onClickFunction = { roomView()}
         }
 
     }

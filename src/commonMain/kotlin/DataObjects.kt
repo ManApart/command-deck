@@ -14,6 +14,7 @@ enum class System(val iconName: String) {
     NONE("none"),
 }
 
+//Eventually room hazards like fire or breach that have different repair minigames
 @Serializable
 data class Room(
     val name: String,

@@ -3,6 +3,7 @@ package views
 import CrewRole
 import GameState
 import Room
+import components.progressBar
 import el
 import frames.TravelFrame
 import kotlinx.browser.window
@@ -28,7 +29,7 @@ fun turboLiftView() {
         div {
             h1 { +"The ${GameState.shipName}" }
             GameState.rooms.values.forEach { room ->
-                div("room") {
+                div("turbo-lift-room") {
                     id = "room-${room.name}"
                     img(classes = "room-icon") {
                         src = "assets/icons/${room.system.iconName}.svg"
@@ -42,7 +43,7 @@ fun turboLiftView() {
 
                     onClickFunction = {
                         if (GameState.rooms[room.name]?.players?.contains(playerState.id) == true) {
-                            window.alert("You're already in the ${room.name}!")
+                            roomView()
                         } else {
                             CoroutineScope(Dispatchers.Default).launch {
                                 startTraveling(room)
@@ -51,13 +52,7 @@ fun turboLiftView() {
                     }
                 }
             }
-            div {
-                id = "progress-bar"
-                hidden = true
-                div("progress-empty") {
-                    id = "progress-bar-inner"
-                }
-            }
+            progressBar()
         }
     }
 }

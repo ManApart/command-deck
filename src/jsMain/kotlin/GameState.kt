@@ -8,8 +8,6 @@ object GameState {
         rooms["Bridge"]?.players?.add("0")
     }
 
-    fun roleOccupied(role: CrewRole) = players.values.any { it.role == role }
-
     fun updateRooms(playerId: String, destination: String){
         rooms.values.forEach { it.players.remove(playerId) }
         rooms[destination]?.players?.add(playerId)
