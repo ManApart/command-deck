@@ -8,6 +8,7 @@
   --action: #4a7a96;
   --background: #333f58;
   --dark-background: #292831;
+  --travel-time: 2s;
 }
 
 body {
@@ -110,4 +111,25 @@ input:checked + .slider:before {
 
 .confirmed {
     border: 10px solid blue;
+}
+
+.room-icon{
+    width: 40px;
+}
+
+#progress-bar {
+    background-color: black;
+    width: 80%;
+    height: 20px;
+}
+
+.progress-empty {
+    background-color: green;
+    width: 1px;
+    height: 20px;
+}
+
+.progress-full {
+    width: 100%;
+    transition: all var(--travel-time);
 }

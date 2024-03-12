@@ -1,5 +1,3 @@
-package frames
-
 enum class CrewRole(val color: String) {
     CAPTAIN("#b7a132"),
     COMMS("#559987"),

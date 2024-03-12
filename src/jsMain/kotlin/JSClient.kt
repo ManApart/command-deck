@@ -49,7 +49,6 @@ val client = HttpClient {
 fun main() {
     window.onload = {
         readyRoomView()
-//        turboLiftView()
         CoroutineScope(Dispatchers.Default).launch {
             webSocket = WebSocket("ws://127.0.0.1:9090/game").apply {
                 onmessage = {

@@ -3,6 +3,7 @@ import kotlinx.browser.window
 import kotlinx.html.div
 import kotlinx.html.unsafe
 import org.w3c.dom.HTMLElement
+import views.arrive
 import views.turboLiftView
 import views.updatedReadyRoom
 
@@ -13,6 +14,7 @@ fun WSFrame.parse() {
         is ServerInfoFrame -> receive()
         is ReadyRoomUpdate -> updatedReadyRoom(this)
         is GameStart -> receive()
+        is TravelFrame -> receive()
         else -> {
             println("Did not recognize $this")
         }
@@ -41,4 +43,9 @@ private fun GameStart.receive() {
     GameState.rooms = rooms
     GameState.players = players
     turboLiftView()
+}
+
+private fun TravelFrame.receive() {
+    GameState.updateRooms(playerId, destination)
+    arrive()
 }

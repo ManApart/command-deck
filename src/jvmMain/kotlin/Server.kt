@@ -21,8 +21,8 @@ import java.net.InetAddress
 import java.time.Duration
 import java.util.*
 
-
-val connections = Collections.synchronizedSet<Connection?>(LinkedHashSet())
+val testing = true
+val connections: MutableSet<Connection> = Collections.synchronizedSet(LinkedHashSet())
 
 val jsonMapper = Json {
     ignoreUnknownKeys = true
@@ -30,7 +30,7 @@ val jsonMapper = Json {
 }
 
 fun main() {
-    val usedPort = System.getenv("PORT")?.toInt() ?: 9090
+    val usedPort = java.lang.System.getenv("PORT")?.toInt() ?: 9090
     println("Command Deck started on port $usedPort")
 
     val environment = applicationEngineEnvironment {
@@ -67,7 +67,6 @@ fun main() {
                     val thisConnection = Connection(this)
                     connections += thisConnection
                     try {
-
                         var ip = ""
                         DatagramSocket().use { datagramSocket ->
                             datagramSocket.connect(InetAddress.getByName("8.8.8.8"), 12345)
@@ -76,6 +75,7 @@ fun main() {
                         val url = "http://${ip}:$usedPort"
                         sendSerialized(ServerInfoFrame(url, thisConnection.playerId,  connections.count()) as WSFrame)
                         sendSerialized(ReadyRoomUpdate(GameState.players) as WSFrame)
+                        onWebsocketConnect(thisConnection)
                         for (frame in incoming) {
                             frame as? Frame.Text ?: continue
                             jsonMapper.decodeFromString<WSFrame>(frame.readText()).parse(thisConnection)

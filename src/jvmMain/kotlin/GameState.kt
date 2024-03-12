@@ -1,8 +1,3 @@
-import frames.CrewRole
-import frames.Player
-import frames.Room
-import frames.initialRooms
-
 object GameState {
     var shipName = "Prometheus"
     val players = mutableMapOf<String, Player>()

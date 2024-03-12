@@ -1,7 +1,7 @@
 package views
 
 import el
-import frames.CrewRole
+import CrewRole
 import frames.GameStart
 import frames.ReadyRoomUpdate
 import frames.UserLoginFrame
