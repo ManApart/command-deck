@@ -19,8 +19,10 @@ import kotlinx.serialization.json.Json
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.WebSocket
 import views.readyRoomView
+import views.roomView
 import views.turboLiftView
 
+const val testing = true
 lateinit var webSocket: WebSocket
 
 val playerState = PlayerState()
@@ -48,7 +50,8 @@ val client = HttpClient {
 
 fun main() {
     window.onload = {
-        readyRoomView()
+//        readyRoomView()
+        roomView()
         CoroutineScope(Dispatchers.Default).launch {
             webSocket = WebSocket("ws://127.0.0.1:9090/game").apply {
                 onmessage = {

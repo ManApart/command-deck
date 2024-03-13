@@ -24,29 +24,33 @@ import replaceElement
 import wsSend
 
 fun turboLiftView() {
+    GameState.currentView = View.TURBO_LIFT
     replaceElement {
         nav()
         div {
             h1 { +"The ${GameState.shipName}" }
-            GameState.rooms.values.forEach { room ->
-                div("turbo-lift-room") {
-                    id = "room-${room.name}"
-                    img(classes = "room-icon") {
-                        src = "assets/icons/${room.system.iconName}.svg"
-                    }
-                    +room.name
-                    img(classes = "room-icon") {
-                        id = "room-${room.name}-present-icon"
-                        src = "assets/icons/crewman.svg"
-                        hidden = !room.players.contains(playerState.id)
-                    }
+            div {
+                id = "rooms"
+                GameState.rooms.values.forEach { room ->
+                    div("turbo-lift-room") {
+                        id = "room-${room.name}"
+                        img(classes = "room-icon") {
+                            src = "assets/icons/${room.system.iconName}.svg"
+                        }
+                        +room.name
+                        img(classes = "room-icon") {
+                            id = "room-${room.name}-present-icon"
+                            src = "assets/icons/crewman.svg"
+                            hidden = !room.players.contains(playerState.id)
+                        }
 
-                    onClickFunction = {
-                        if (GameState.rooms[room.name]?.players?.contains(playerState.id) == true) {
-                            roomView()
-                        } else {
-                            CoroutineScope(Dispatchers.Default).launch {
-                                startTraveling(room)
+                        onClickFunction = {
+                            if (GameState.rooms[room.name]?.players?.contains(playerState.id) == true) {
+                                roomView()
+                            } else {
+                                CoroutineScope(Dispatchers.Default).launch {
+                                    startTraveling(room)
+                                }
                             }
                         }
                     }

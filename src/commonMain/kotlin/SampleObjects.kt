@@ -7,3 +7,5 @@ fun initialRooms() = listOf(
     Room("Engineering", System.ENGINES),
     Room("Shield Generator", System.SHIELDS),
 )
+
+fun player() = Player("0", "Kirk", CrewRole.CAPTAIN)

@@ -12,17 +12,18 @@ fun TagConsumer<HTMLElement>.nav() {
     div {
         id = "nav"
         //Role specific views
-        when(playerState.role){
+        when (playerState.role) {
             else -> {}
         }
-        button(classes = "nav-button") {
-            +"Turbo Lift"
-            onClickFunction = { turboLiftView()}
+        if (playerState.role != CrewRole.STORY_TELLER) {
+            button(classes = "nav-button") {
+                +"Turbo Lift"
+                onClickFunction = { turboLiftView() }
+            }
+            button(classes = "nav-button") {
+                +"Room"
+                onClickFunction = { roomView() }
+            }
         }
-        button(classes = "nav-button") {
-            +"Room"
-            onClickFunction = { roomView()}
-        }
-
     }
 }

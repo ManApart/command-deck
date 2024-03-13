@@ -2,6 +2,7 @@ package views
 
 import el
 import CrewRole
+import GameState
 import frames.GameStart
 import frames.ReadyRoomUpdate
 import frames.UserLoginFrame
@@ -19,6 +20,7 @@ import replaceElement
 import wsSend
 
 fun readyRoomView() {
+    GameState.currentView = View.READY_ROOM
     replaceElement {
         div {
             h1 { +"Welcome to Command Deck" }

@@ -1,6 +1,7 @@
 package frames
 
 import CrewRole
+import Hazard
 import Player
 import Room
 import kotlinx.serialization.Serializable
@@ -25,3 +26,9 @@ data class GameStart(val shipName: String, val players: Map<String, Player>, val
 
 @Serializable
 data class TravelFrame(val playerId: String, val destination: String) : WSFrame
+
+@Serializable
+data class RepairFrame(val roomId: String, val hazard: Hazard = Hazard.NONE, val amount: Int = 1) : WSFrame
+
+@Serializable
+data class RoomUpdate(val roomId: String, val health: Int, val breach: Int, val fire: Int) : WSFrame

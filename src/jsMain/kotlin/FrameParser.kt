@@ -1,9 +1,11 @@
+import GameState.currentView
 import frames.*
 import kotlinx.browser.window
 import kotlinx.html.div
 import kotlinx.html.unsafe
 import org.w3c.dom.HTMLElement
 import views.arrive
+import views.roomUpdate
 import views.turboLiftView
 import views.updatedReadyRoom
 
@@ -47,5 +49,19 @@ private fun GameStart.receive() {
 
 private fun TravelFrame.receive() {
     GameState.updateRooms(playerId, destination)
-    arrive()
+    if (currentView == View.TURBO_LIFT) {
+        arrive()
+    }
+}
+
+private fun RoomUpdate.receive() {
+    val room = GameState.rooms[roomId]
+    if (room != null) {
+        room.health = health
+        room.breach = breach
+        room.fire = fire
+        if (currentView == View.ROOM && room.players.contains(playerState.id)) {
+            roomUpdate(room)
+        }
+    }
 }

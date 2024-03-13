@@ -89,6 +89,7 @@ input:checked + .slider:before {
 }
 
 .crew-role-select {
+    display: inline-block;
     background-color: var(--action);
     padding: 20px;
     margin: 10px;
@@ -115,6 +116,10 @@ input:checked + .slider:before {
 
 .room-icon{
     width: 40px;
+}
+
+#rooms{
+    margin-bottom: 20px;
 }
 
 #progress-bar {
