@@ -20,12 +20,11 @@ import org.w3c.dom.HTMLElement
 import org.w3c.dom.WebSocket
 import views.readyRoomView
 import views.roomView
+import views.storyTeller.manageRoomsView
 import views.turboLiftView
 
 const val testing = true
 lateinit var webSocket: WebSocket
-
-val playerState = PlayerState()
 
 fun wsSend(frame: WSFrame){
     val data = jsonMapper.encodeToString(frame)
@@ -51,7 +50,7 @@ val client = HttpClient {
 fun main() {
     window.onload = {
 //        readyRoomView()
-        roomView()
+        manageRoomsView()
         CoroutineScope(Dispatchers.Default).launch {
             webSocket = WebSocket("ws://127.0.0.1:9090/game").apply {
                 onmessage = {
@@ -63,7 +62,6 @@ fun main() {
         }
     }
 }
-
 
 fun el(id: String) = document.getElementById(id) as HTMLElement
 fun <T> el(id: String) = document.getElementById(id) as T
