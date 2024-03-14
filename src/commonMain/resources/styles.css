@@ -76,6 +76,10 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
+input[type=number] {
+    width: 40px;
+}
+
 #qr-code{
     background-color: white;
     width: 200px;

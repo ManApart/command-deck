@@ -20,15 +20,11 @@ import org.w3c.dom.HTMLElement
 import org.w3c.dom.WebSocket
 import views.readyRoomView
 import views.roomView
-import views.storyTeller.manageRoomsView
-import views.turboLiftView
 
-const val testing = true
 lateinit var webSocket: WebSocket
 
-fun wsSend(frame: WSFrame){
+fun wsSend(frame: WSFrame) {
     val data = jsonMapper.encodeToString(frame)
-    println("sending: $data")
     webSocket.send(data)
 }
 
@@ -49,8 +45,10 @@ val client = HttpClient {
 
 fun main() {
     window.onload = {
-//        readyRoomView()
-        manageRoomsView()
+        if (testing) {
+            roomView()
+        } else readyRoomView()
+
         CoroutineScope(Dispatchers.Default).launch {
             webSocket = WebSocket("ws://127.0.0.1:9090/game").apply {
                 onmessage = {
@@ -60,11 +58,13 @@ fun main() {
                 }
             }
         }
+        fireTestInputEvent()
     }
 }
 
 fun el(id: String) = document.getElementById(id) as HTMLElement
 fun <T> el(id: String) = document.getElementById(id) as T
+fun elExists(id: String) = (document.getElementById(id) as HTMLElement?) != null
 
 fun replaceElement(id: String = "root", rootClasses: String? = null, newHtml: suspend TagConsumer<HTMLElement>.() -> Unit) {
     val root = el<HTMLElement?>(id)

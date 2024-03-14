@@ -72,7 +72,6 @@ private suspend fun startTraveling(room: Room) {
 
 fun arrive() {
     GameState.rooms.values.forEach { room ->
-        println("Room ${room.name} has crew ${room.players}")
         val show = playerState.role == CrewRole.MEDICAL || room.players.contains(playerState.id)
         el("room-${room.name}-present-icon").hidden = !show
     }

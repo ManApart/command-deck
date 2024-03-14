@@ -16,17 +16,6 @@ object GameState {
         rooms[destination]?.players?.add(playerId)
     }
 
-    private fun initializeTestingData() {
-        if (testing) {
-            with(playerState) {
-                id = "0"
-                name = "Kirk"
-                role = CrewRole.STORY_TELLER
-                players = mapOf(id to Player(id, name, role))
-                rooms["Bridge"]?.players?.add("0")
-            }
-        }
-    }
 }
 
 enum class View {

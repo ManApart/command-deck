@@ -18,7 +18,9 @@ suspend fun UserLoginFrame.receive(connection: Connection) {
     GameState.players.putIfAbsent(connection.playerId, Player(connection.playerId, name))
     GameState.players[connection.playerId]?.name = name
     GameState.players[connection.playerId]?.role = role
-    GameState.rooms["Bridge"]?.players?.add(connection.playerId)
+    if (role != CrewRole.STORY_TELLER) {
+        GameState.rooms["Bridge"]?.players?.add(connection.playerId)
+    }
 
     sendAll(ReadyRoomUpdate(GameState.players))
 }

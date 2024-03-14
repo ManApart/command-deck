@@ -6,6 +6,7 @@ import GameState.players
 import Hazard
 import Room
 import el
+import elExists
 import frames.RepairFrame
 import frames.RoomUpdate
 import kotlinx.html.*
@@ -36,7 +37,6 @@ fun roomView() {
                         id = "room-players"
                         +"Current Crew:"
                     }
-                    println("Room: ${room.players}, Game: ${GameState.players.keys}")
                     room.players.mapNotNull { players[it] }.forEach { player ->
                         div(classes = "crew-role-select") {
                             id = "select-${player.role.name}"
@@ -55,7 +55,10 @@ fun roomView() {
                         img(classes = "room-icon") {
                             src = "assets/icons/medical.svg"
                         }
-                        +"Structural Integrity: ${room.health}/100"
+                        span {
+                            id = "room-health-text"
+                            +"Structural Integrity: ${room.health}/100"
+                        }
                         button {
                             id = "health-repair"
                             hidden = room.health == 100
@@ -71,7 +74,10 @@ fun roomView() {
                         img(classes = "room-icon") {
                             src = "assets/icons/none.svg"
                         }
-                        +"Breach: ${room.breach}"
+                        span {
+                            id = "room-hazard-breach-text"
+                            +"Breach: ${room.breach}"
+                        }
                         button {
                             +"Repair"
                             onClickFunction = {
@@ -85,7 +91,10 @@ fun roomView() {
                         img(classes = "room-icon") {
                             src = "assets/icons/fire.svg"
                         }
-                        +"Fire: ${room.fire}"
+                        span {
+                            id = "room-hazard-fire-text"
+                            +"Fire: ${room.fire}"
+                        }
                         button {
                             +"Repair"
                             onClickFunction = {
@@ -102,14 +111,12 @@ fun roomView() {
 }
 
 fun roomUpdate(room: Room) {
-    el("room-health").innerText = "Structural Integrity: ${room.health}/100"
-    el("health-repair").hidden = room.health == 100
-    el("room-hazard-breach").apply {
-        innerText = "Breach: ${room.breach}"
-        hidden = room.breach == 0
-    }
-    el("room-hazard-fire").apply {
-        innerText = "Fire: ${room.fire}"
-        hidden = room.fire == 0
+    if (elExists("room-health")) {
+        el("room-health-text").innerText = "Structural Integrity: ${room.health}/100"
+        el("health-repair").hidden = room.health == 100
+        el("room-hazard-breach").hidden= room.breach == 0
+        el("room-hazard-breach-text").innerText = "Breach: ${room.breach}"
+        el("room-hazard-fire").hidden = room.fire == 0
+        el("room-hazard-fire-text").innerText = "Fire: ${room.fire}"
     }
 }

@@ -40,3 +40,14 @@ suspend fun RepairFrame.receive() {
     }
 
 }
+
+suspend fun RoomUpdate.receive() {
+    val room = GameState.rooms[roomId]
+    if (room != null){
+        room.breach = breach.clamp()
+        room.fire = fire.clamp()
+        room.health = health.clamp()
+
+        sendAll(RoomUpdate(room.name, room.health, room.breach, room.fire))
+    }
+}

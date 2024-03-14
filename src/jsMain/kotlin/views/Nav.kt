@@ -12,7 +12,7 @@ import views.storyTeller.manageRoomsView
 fun TagConsumer<HTMLElement>.nav() {
     div {
         id = "nav"
-        println("Role is ${playerState.role}")
+        //TODO - show name and title
         //Role specific views
         when (playerState.role) {
             CrewRole.STORY_TELLER -> storyTellerViews()

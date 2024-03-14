@@ -6,16 +6,20 @@ import kotlinx.html.unsafe
 import org.w3c.dom.HTMLElement
 import views.arrive
 import views.roomUpdate
+import views.storyTeller.manageRoomsView
+import views.storyTeller.roomManagerRoomUpdate
+import views.storyTeller.roomManagerTravelUpdate
 import views.turboLiftView
 import views.updatedReadyRoom
 
 fun WSFrame.parse() {
     println("Parsing frame $this")
     when (this) {
-        is MessageFrame -> receive()
-        is ServerInfoFrame -> receive()
-        is ReadyRoomUpdate -> updatedReadyRoom(this)
         is GameStart -> receive()
+        is MessageFrame -> receive()
+        is ReadyRoomUpdate -> updatedReadyRoom(this)
+        is RoomUpdate -> receive()
+        is ServerInfoFrame -> receive()
         is TravelFrame -> receive()
         else -> {
             println("Did not recognize $this")
@@ -44,13 +48,17 @@ private fun GameStart.receive() {
     GameState.shipName = shipName
     GameState.rooms = rooms
     GameState.players = players
-    turboLiftView()
+    if (playerState.role == CrewRole.STORY_TELLER) {
+        manageRoomsView()
+    } else turboLiftView()
 }
 
 private fun TravelFrame.receive() {
     GameState.updateRooms(playerId, destination)
     if (currentView == View.TURBO_LIFT) {
         arrive()
+    } else if (currentView == View.ROOM_MANAGER) {
+        roomManagerTravelUpdate()
     }
 }
 
@@ -62,6 +70,8 @@ private fun RoomUpdate.receive() {
         room.fire = fire
         if (currentView == View.ROOM && room.players.contains(playerState.id)) {
             roomUpdate(room)
+        } else if (currentView == View.ROOM_MANAGER) {
+            roomManagerRoomUpdate(room)
         }
     }
 }

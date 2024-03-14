@@ -1,27 +1,16 @@
 package views.storyTeller
 
-import CrewRole
 import GameState
 import Room
-import components.progressBar
+import View
 import el
-import frames.TravelFrame
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.dom.addClass
-import kotlinx.dom.removeClass
-import kotlinx.html.hidden
-import kotlinx.html.id
+import frames.RoomUpdate
+import kotlinx.html.*
 import kotlinx.html.js.div
-import kotlinx.html.js.h1
-import kotlinx.html.js.img
 import kotlinx.html.js.onClickFunction
-import playerState
+import org.w3c.dom.HTMLInputElement
 import replaceElement
 import views.nav
-import views.roomView
 import wsSend
 
 fun manageRoomsView() {
@@ -44,10 +33,36 @@ fun manageRoomsView() {
                             src = "assets/icons/crewman.svg"
                             hidden = room.players.isEmpty()
                         }
+                        div("room-edits") {
 
-                        onClickFunction = {
-                            //TODO - edit room stuffs
+                            span("edit-room-repair") {
+                                +"Integrity: "
+                                input(InputType.number) {
+                                    id = "edit-room-health"
+                                    value = room.health.toString()
+                                }
+                            }
+                            span("edit-room-breach") {
+                                +"Breach: "
+                                input(InputType.number) {
+                                    id = "edit-room-breach"
+                                    value = room.breach.toString()
+                                }
+                            }
+                            span("edit-room-fire") {
+                                +"Fire: "
+                                input(InputType.number) {
+                                    id = "edit-room-fire"
+                                    value = room.fire.toString()
+                                }
+                            }
+
+                            button {
+                                +"Update"
+                                onClickFunction = { sendRoomUpdate(room) }
+                            }
                         }
+
                     }
                 }
             }
@@ -55,13 +70,21 @@ fun manageRoomsView() {
     }
 }
 
-//TODO - travel and room updates
-fun arrive() {
+private fun sendRoomUpdate(room: Room) {
+    val health = el<HTMLInputElement>("edit-room-health").value.toIntOrNull() ?: 0
+    val breach = el<HTMLInputElement>("edit-room-breach").value.toIntOrNull() ?: 0
+    val fire = el<HTMLInputElement>("edit-room-fire").value.toIntOrNull() ?: 0
+    wsSend(RoomUpdate(room.name, health, breach, fire))
+}
+
+fun roomManagerTravelUpdate() {
     GameState.rooms.values.forEach { room ->
-        println("Room ${room.name} has crew ${room.players}")
-        val show = playerState.role == CrewRole.MEDICAL || room.players.contains(playerState.id)
-        el("room-${room.name}-present-icon").hidden = !show
+        el("room-${room.name}-present-icon").hidden = room.players.isEmpty()
     }
-    el("progress-bar").hidden = true
-    el("progress-bar-inner").removeClass("progress-full")
+}
+
+fun roomManagerRoomUpdate(room: Room) {
+    el<HTMLInputElement>("edit-room-health").value = room.health.toString()
+    el<HTMLInputElement>("edit-room-breach").value = room.breach.toString()
+    el<HTMLInputElement>("edit-room-fire").value = room.fire.toString()
 }

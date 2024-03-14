@@ -21,7 +21,6 @@ import java.net.InetAddress
 import java.time.Duration
 import java.util.*
 
-const val testing = true
 val connections: MutableSet<Connection> = Collections.synchronizedSet(LinkedHashSet())
 
 val jsonMapper = Json {
