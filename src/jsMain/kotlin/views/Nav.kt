@@ -1,5 +1,7 @@
 package views
 
+import GameState.currentView
+import View
 import kotlinx.html.*
 import kotlinx.html.js.onClickFunction
 import org.w3c.dom.HTMLElement
@@ -15,11 +17,12 @@ fun TagConsumer<HTMLElement>.nav() {
         }
 
         if (playerState.role != CrewRole.STORY_TELLER) {
-            button(classes = "nav-button") {
+
+            button(classes = "nav-button ${currentView.matchClass(View.TURBO_LIFT)}") {
                 +"Turbo Lift"
                 onClickFunction = { turboLiftView() }
             }
-            button(classes = "nav-button") {
+            button(classes = "nav-button ${currentView.matchClass(View.ROOM)}") {
                 +"Room"
                 onClickFunction = { roomView() }
             }
@@ -28,8 +31,10 @@ fun TagConsumer<HTMLElement>.nav() {
     }
 }
 
-private fun TagConsumer<HTMLElement>.storyTellerViews(){
-    button(classes = "nav-button") {
+private fun View.matchClass(other: View) = if(this == other) "current-nav-view" else ""
+
+private fun TagConsumer<HTMLElement>.storyTellerViews( ){
+    button(classes = "nav-button ${currentView.matchClass(View.ROOM_MANAGER)}") {
         +"Room Manager"
         onClickFunction = { manageRoomsView() }
     }

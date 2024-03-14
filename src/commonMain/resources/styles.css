@@ -142,3 +142,10 @@ input[type=number] {
     width: 100%;
     transition: all var(--travel-time);
 }
+
+.nav-button {
+}
+
+.current-nav-view {
+    border: 1px solid blue;
+}
