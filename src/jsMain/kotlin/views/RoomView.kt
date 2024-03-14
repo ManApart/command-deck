@@ -28,7 +28,10 @@ fun roomView() {
             img(classes = "room-icon") {
                 src = "assets/icons/${room.system.iconName}.svg"
             }
-            h1 { +room.name }
+            h1 {
+                style ="display: inline-block;"
+                +room.name
+            }
             div("room") {
                 id = "room-${room.name}"
                 div {

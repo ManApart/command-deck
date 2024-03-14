@@ -7,9 +7,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-const val testing = false
+const val testing = true
 
-val testInputFrame: WSFrame? = RoomUpdate("Bridge", 50, 10, 11)
+val testInputFrame: WSFrame? = null
+//val testInputFrame: WSFrame? = RoomUpdate("Bridge", 50, 10, 11)
 
 fun initializeTestingData() {
     if (testing) {

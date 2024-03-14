@@ -1,9 +1,6 @@
 package views
 
-import kotlinx.html.TagConsumer
-import kotlinx.html.button
-import kotlinx.html.div
-import kotlinx.html.id
+import kotlinx.html.*
 import kotlinx.html.js.onClickFunction
 import org.w3c.dom.HTMLElement
 import playerState
@@ -12,12 +9,11 @@ import views.storyTeller.manageRoomsView
 fun TagConsumer<HTMLElement>.nav() {
     div {
         id = "nav"
-        //TODO - show name and title
-        //Role specific views
         when (playerState.role) {
             CrewRole.STORY_TELLER -> storyTellerViews()
             else -> {}
         }
+
         if (playerState.role != CrewRole.STORY_TELLER) {
             button(classes = "nav-button") {
                 +"Turbo Lift"
@@ -28,6 +24,7 @@ fun TagConsumer<HTMLElement>.nav() {
                 onClickFunction = { roomView() }
             }
         }
+        p { +"${playerState.role.title} ${playerState.name}" }
     }
 }
 
