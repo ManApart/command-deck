@@ -45,6 +45,7 @@ val client = HttpClient {
 
 fun main() {
     window.onload = {
+        setCssVariables()
         if (testing) {
             roomView()
         } else readyRoomView()
@@ -79,5 +80,11 @@ fun replaceElement(id: String = "root", rootClasses: String? = null, newHtml: su
             }
         }
         root.replaceWith(newRoot)
+    }
+}
+
+private fun setCssVariables(){
+    (document.documentElement as HTMLElement).style.apply {
+        setProperty("--travel-time", "${Config.travelTime}ms")
     }
 }
