@@ -19,8 +19,9 @@ object GameState {
 }
 
 enum class View {
-    TURBO_LIFT,
+    CREW,
     READY_ROOM,
     ROOM,
     ROOM_MANAGER,
+    TURBO_LIFT,
 }

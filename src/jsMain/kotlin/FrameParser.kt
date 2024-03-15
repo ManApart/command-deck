@@ -4,19 +4,17 @@ import kotlinx.browser.window
 import kotlinx.html.div
 import kotlinx.html.unsafe
 import org.w3c.dom.HTMLElement
-import views.arrive
-import views.roomUpdate
+import views.*
 import views.storyTeller.manageRoomsView
 import views.storyTeller.roomManagerRoomUpdate
 import views.storyTeller.roomManagerTravelUpdate
-import views.turboLiftView
-import views.updatedReadyRoom
 
 fun WSFrame.parse() {
     println("Parsing frame $this")
     when (this) {
         is GameStart -> receive()
         is MessageFrame -> receive()
+        is Promotion -> receive()
         is ReadyRoomUpdate -> updatedReadyRoom(this)
         is RoomUpdate -> receive()
         is ServerInfoFrame -> receive()
@@ -74,4 +72,14 @@ private fun RoomUpdate.receive() {
             roomManagerRoomUpdate(room)
         }
     }
+}
+
+private fun Promotion.receive() {
+    GameState.players[playerId]?.role = role
+    if (playerState.id == playerId){
+        roomView()
+    } else if (currentView == View.CREW){
+        crewView()
+    }
+
 }

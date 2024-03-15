@@ -18,6 +18,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.WebSocket
+import views.crewView
 import views.readyRoomView
 import views.roomView
 
@@ -47,7 +48,7 @@ fun main() {
     window.onload = {
         setCssVariables()
         if (testing) {
-            roomView()
+            crewView()
         } else readyRoomView()
 
         CoroutineScope(Dispatchers.Default).launch {

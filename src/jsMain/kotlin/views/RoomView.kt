@@ -1,20 +1,16 @@
 package views
 
 import GameState
-import GameState.currentView
 import GameState.players
 import Hazard
 import Room
+import View
 import el
 import elExists
 import frames.RepairFrame
-import frames.RoomUpdate
 import kotlinx.html.*
 import kotlinx.html.js.div
-import kotlinx.html.js.h1
-import kotlinx.html.js.img
 import kotlinx.html.js.onClickFunction
-import org.w3c.dom.HTMLElement
 import playerState
 import replaceElement
 import wsSend
@@ -47,7 +43,7 @@ fun roomView() {
                             img(classes = "role-select-img") {
                                 src = "assets/icons/${player.role.name.lowercase()}.svg"
                             }
-                            +"${player.role.cleanName()}: ${player.name}"
+                            +"${player.role.title} ${player.name}"
                         }
                     }
                 }
@@ -112,6 +108,8 @@ fun roomView() {
         }
     }
 }
+
+//TODO - travel update should update crew
 
 fun roomUpdate(room: Room) {
     if (elExists("room-health")) {

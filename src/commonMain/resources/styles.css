@@ -100,6 +100,17 @@ input[type=number] {
     border: 10px solid transparent;
 }
 
+.crew-block {
+    max-width: 200px;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.crew-row {
+    display: block;
+}
+
 .role-select-img{
     width: 40px;
     display: block;

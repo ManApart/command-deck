@@ -4,6 +4,7 @@ import gamelogic.receive
 suspend fun WSFrame.parse(connection: Connection) {
     println("Parsing frame $this")
     when (this) {
+        is Promotion -> receive()
         is GameStart -> receive(connection)
         is MessageFrame -> receive(connection)
         is RepairFrame -> receive()

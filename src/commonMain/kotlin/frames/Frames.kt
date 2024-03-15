@@ -32,3 +32,6 @@ data class RepairFrame(val roomId: String, val hazard: Hazard = Hazard.NONE, val
 
 @Serializable
 data class RoomUpdate(val roomId: String, val health: Int, val breach: Int = 0, val fire: Int = 0) : WSFrame
+
+@Serializable
+data class Promotion(val playerId: String, val role: CrewRole = CrewRole.CREWMAN) : WSFrame
