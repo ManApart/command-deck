@@ -22,7 +22,8 @@ fun initializeTestingData() {
 
             players = mapOf(
                 id to Player(id, name, role),
-                "1" to Player("1", "Spock", CrewRole.CREWMAN),
+                "1" to Player("1", "Spock", CrewRole.SCIENCE, true),
+                "2" to Player("1", "Checkov", CrewRole.CREWMAN),
             )
         }
     }

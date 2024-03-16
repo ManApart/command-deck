@@ -35,3 +35,6 @@ data class RoomUpdate(val roomId: String, val health: Int, val breach: Int = 0, 
 
 @Serializable
 data class Promotion(val playerId: String, val role: CrewRole = CrewRole.CREWMAN) : WSFrame
+
+@Serializable
+data class CaptainFocus(val playerId: String) : WSFrame

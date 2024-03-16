@@ -1,7 +1,7 @@
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Player(val id: String, var name: String, var role: CrewRole = CrewRole.CREWMAN)
+data class Player(val id: String, var name: String, var role: CrewRole = CrewRole.CREWMAN, var focused: Boolean = false)
 
 enum class System(val iconName: String) {
     BRIDGE("captain"),

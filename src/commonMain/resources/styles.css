@@ -17,6 +17,17 @@ body {
     font-family: Montserrat, sans-serif;
 }
 
+button {
+    color: var(--white);
+    background-color: var(--action);
+    border: 0px;
+    padding: 5px;
+    margin: 5px;
+}
+
+button:hover {
+}
+
 .hidden {
     display: none;
 }
@@ -80,6 +91,13 @@ input[type=number] {
     width: 40px;
 }
 
+.nav-button {
+}
+
+.current-nav-view {
+    border: 1px solid white;
+}
+
 #qr-code{
     background-color: white;
     width: 200px;
@@ -98,10 +116,12 @@ input[type=number] {
     padding: 20px;
     margin: 10px;
     border: 10px solid transparent;
+    text-align: center;
 }
 
 .crew-block {
-    max-width: 200px;
+    display: block;
+    max-width: 150px;
     margin-right: 20px;
     margin-left: 20px;
     margin-top: 10px;
@@ -154,9 +174,3 @@ input[type=number] {
     transition: all var(--travel-time);
 }
 
-.nav-button {
-}
-
-.current-nav-view {
-    border: 1px solid blue;
-}

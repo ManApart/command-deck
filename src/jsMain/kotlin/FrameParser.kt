@@ -12,6 +12,7 @@ import views.storyTeller.roomManagerTravelUpdate
 fun WSFrame.parse() {
     println("Parsing frame $this")
     when (this) {
+        is CaptainFocus -> receive()
         is GameStart -> receive()
         is MessageFrame -> receive()
         is Promotion -> receive()
@@ -76,10 +77,22 @@ private fun RoomUpdate.receive() {
 
 private fun Promotion.receive() {
     GameState.players[playerId]?.role = role
-    if (playerState.id == playerId){
+    if (playerState.id == playerId) {
         roomView()
-    } else if (currentView == View.CREW){
+    } else if (currentView == View.CREW) {
         crewView()
     }
+}
 
+private fun CaptainFocus.receive() {
+    val wasFocused = playerState.focused
+    playerState.focused = playerState.id == playerId
+    GameState.players.values.forEach { it.focused = false }
+    GameState.players[playerId]?.focused = true
+
+    if (currentView == View.CREW) crewView()
+
+    if (playerState.focused != wasFocused){
+        //TODO - update crew views
+    }
 }
