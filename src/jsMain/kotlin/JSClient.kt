@@ -26,6 +26,7 @@ lateinit var webSocket: WebSocket
 
 fun wsSend(frame: WSFrame) {
     val data = jsonMapper.encodeToString(frame)
+    println("Sending $data")
     webSocket.send(data)
 }
 
@@ -47,9 +48,7 @@ val client = HttpClient {
 fun main() {
     window.onload = {
         setCssVariables()
-        if (testing) {
-            crewView()
-        } else readyRoomView()
+        if (testing) testView() else readyRoomView()
 
         CoroutineScope(Dispatchers.Default).launch {
             webSocket = WebSocket("ws://127.0.0.1:9090/game").apply {
@@ -84,7 +83,7 @@ fun replaceElement(id: String = "root", rootClasses: String? = null, newHtml: su
     }
 }
 
-private fun setCssVariables(){
+private fun setCssVariables() {
     (document.documentElement as HTMLElement).style.apply {
         setProperty("--travel-time", "${Config.travelTime}ms")
     }

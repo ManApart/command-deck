@@ -14,6 +14,7 @@ fun TagConsumer<HTMLElement>.nav() {
         id = "nav"
         when (playerState.role) {
             CrewRole.CAPTAIN -> navButton("Crew", View.CREW) { crewView() }
+            CrewRole.HELM -> navButton("Helm", View.HELM) { helmView() }
             CrewRole.STORY_TELLER -> storyTellerViews()
             else -> {}
         }

@@ -16,7 +16,6 @@ enum class System(val iconName: String) {
 
 enum class Hazard { BREACH, FIRE, NONE }
 
-//Eventually room hazards like fire or breach that have different repair minigames
 @Serializable
 data class Room(
     val name: String,
@@ -25,4 +24,12 @@ data class Room(
     var fire: Int = 0,
     var breach: Int = 0,
     val players: MutableList<String> = mutableListOf()
+)
+
+@Serializable
+data class ShipPosition(
+    var x: Int = 5,
+    var y: Int = 5,
+    var sectorX: Int = 5,
+    var sectorY: Int = 5,
 )

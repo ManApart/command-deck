@@ -4,13 +4,13 @@ import Connection
 import Player
 import connections
 import frames.GameStart
-import frames.MessageFrame
+import frames.MessageUpdate
 import frames.ReadyRoomUpdate
-import frames.UserLoginFrame
+import frames.UserLogin
 import sendAll
 
 
-suspend fun UserLoginFrame.receive(connection: Connection) {
+suspend fun UserLogin.receive(connection: Connection) {
     if (role != CrewRole.CREWMAN && GameState.roleOccupied(role)) {
         connection.send(ReadyRoomUpdate(GameState.players))
         return
@@ -27,7 +27,7 @@ suspend fun UserLoginFrame.receive(connection: Connection) {
 
 suspend fun GameStart.receive(connection: Connection) {
     if (!forceStart && connections.any { GameState.players[it.playerId] == null }) {
-        connection.send(MessageFrame("Not all players are ready!", true))
+        connection.send(MessageUpdate("Not all players are ready!", true))
     } else {
         GameState.shipName = shipName
         sendAll(GameStart(shipName, GameState.players, GameState.rooms))

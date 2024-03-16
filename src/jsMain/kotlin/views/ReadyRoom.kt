@@ -5,7 +5,7 @@ import CrewRole
 import GameState
 import frames.GameStart
 import frames.ReadyRoomUpdate
-import frames.UserLoginFrame
+import frames.UserLogin
 import kotlinx.browser.window
 import kotlinx.dom.addClass
 import kotlinx.dom.removeClass
@@ -123,7 +123,7 @@ private fun updateRole() {
         window.alert("You must have a name to ready up!")
         unReady()
     } else {
-        wsSend(UserLoginFrame(playerState.name, playerState.role))
+        wsSend(UserLogin(playerState.name, playerState.role))
     }
 }
 

@@ -7,7 +7,7 @@ import Room
 import View
 import el
 import elExists
-import frames.RepairFrame
+import frames.RepairUpdate
 import kotlinx.html.*
 import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
@@ -63,7 +63,7 @@ fun roomView() {
                             hidden = room.health == 100
                             +"Repair"
                             onClickFunction = {
-                                wsSend(RepairFrame(room.name))
+                                wsSend(RepairUpdate(room.name))
                             }
                         }
                     }
@@ -80,7 +80,7 @@ fun roomView() {
                         button {
                             +"Repair"
                             onClickFunction = {
-                                wsSend(RepairFrame(room.name, Hazard.BREACH))
+                                wsSend(RepairUpdate(room.name, Hazard.BREACH))
                             }
                         }
                     }
@@ -97,7 +97,7 @@ fun roomView() {
                         button {
                             +"Repair"
                             onClickFunction = {
-                                wsSend(RepairFrame(room.name, Hazard.FIRE))
+                                wsSend(RepairUpdate(room.name, Hazard.FIRE))
                             }
                         }
                     }

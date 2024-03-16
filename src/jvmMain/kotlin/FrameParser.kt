@@ -7,19 +7,19 @@ suspend fun WSFrame.parse(connection: Connection) {
         is CaptainFocus -> receive()
         is Promotion -> receive()
         is GameStart -> receive(connection)
-        is MessageFrame -> receive(connection)
-        is RepairFrame -> receive()
+        is MessageUpdate -> receive(connection)
+        is RepairUpdate -> receive()
         is RoomUpdate -> receive()
-        is TravelFrame -> receive(connection)
-        is UserLoginFrame -> receive(connection)
+        is TravelUpdate -> receive(connection)
+        is UserLogin -> receive(connection)
         else -> {
             println("Did not recognize $this")
         }
     }
 }
 
-private suspend fun MessageFrame.receive(connection: Connection) {
+private suspend fun MessageUpdate.receive(connection: Connection) {
     val textWithUsername = "[${connection.playerId}]: Pinged with message: $message"
     println(textWithUsername)
-    sendAll(MessageFrame(textWithUsername))
+    sendAll(MessageUpdate(textWithUsername))
 }

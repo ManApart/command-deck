@@ -5,18 +5,21 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import views.helmView
 
-const val testing = false
+const val testing = true
 
 val testInputFrame: WSFrame? = null
 //val testInputFrame: WSFrame? = RoomUpdate("Bridge", 50, 10, 11)
+
+fun testView() = helmView()
 
 fun initializeTestingData() {
     if (testing) {
         with(playerState) {
             id = "0"
             name = "Kirk"
-            role = CrewRole.CAPTAIN
+            role = CrewRole.HELM
             rooms["Bridge"]?.players?.add("0")
             rooms["Bridge"]?.players?.add("1")
 

@@ -5,8 +5,7 @@ import GameState
 import Room
 import components.progressBar
 import el
-import frames.TravelFrame
-import kotlinx.browser.window
+import frames.TravelUpdate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -62,7 +61,7 @@ fun turboLiftView() {
 }
 
 private suspend fun startTraveling(room: Room) {
-    wsSend(TravelFrame(playerState.id, room.name))
+    wsSend(TravelUpdate(playerState.id, room.name))
     val inner = el("progress-bar-inner")
     inner.removeClass("progress-full")
     el("progress-bar").hidden = false

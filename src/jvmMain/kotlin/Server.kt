@@ -1,5 +1,5 @@
 import frames.ReadyRoomUpdate
-import frames.ServerInfoFrame
+import frames.ServerInfoUpdate
 import frames.WSFrame
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.*
@@ -72,7 +72,7 @@ fun main() {
                             ip = datagramSocket.localAddress.hostAddress
                         }
                         val url = "http://${ip}:$usedPort"
-                        sendSerialized(ServerInfoFrame(url, thisConnection.playerId,  connections.count()) as WSFrame)
+                        sendSerialized(ServerInfoUpdate(url, thisConnection.playerId,  connections.count()) as WSFrame)
                         sendSerialized(ReadyRoomUpdate(GameState.players) as WSFrame)
                         onWebsocketConnect(thisConnection)
                         for (frame in incoming) {

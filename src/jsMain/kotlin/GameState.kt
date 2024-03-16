@@ -5,6 +5,7 @@ object GameState {
     var players = mapOf<String, Player>()
     var rooms = mapOf<String, Room>()
     var currentView = View.TURBO_LIFT
+    var shipPosition: ShipPosition = ShipPosition()
 
     init {
         rooms = initialRooms().associateBy { it.name }
@@ -20,6 +21,11 @@ object GameState {
 
 enum class View {
     CREW,
+    COMMS,
+    HELM,
+    MED_BAY,
+    WEAPONS,
+    SHIELDS,
     READY_ROOM,
     ROOM,
     ROOM_MANAGER,

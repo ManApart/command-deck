@@ -14,24 +14,24 @@ fun WSFrame.parse() {
     when (this) {
         is CaptainFocus -> receive()
         is GameStart -> receive()
-        is MessageFrame -> receive()
+        is MessageUpdate -> receive()
         is Promotion -> receive()
         is ReadyRoomUpdate -> updatedReadyRoom(this)
         is RoomUpdate -> receive()
-        is ServerInfoFrame -> receive()
-        is TravelFrame -> receive()
+        is ServerInfoUpdate -> receive()
+        is TravelUpdate -> receive()
         else -> {
             println("Did not recognize $this")
         }
     }
 }
 
-private fun MessageFrame.receive() {
+private fun MessageUpdate.receive() {
     if (alert) window.alert(message)
     println("Server said: $message")
 }
 
-private fun ServerInfoFrame.receive() {
+private fun ServerInfoUpdate.receive() {
     playerState.id = playerId
     el<HTMLElement>("ip-display").innerText = url
     replaceElement("qr-code-wrapper") {
@@ -52,7 +52,7 @@ private fun GameStart.receive() {
     } else turboLiftView()
 }
 
-private fun TravelFrame.receive() {
+private fun TravelUpdate.receive() {
     GameState.updateRooms(playerId, destination)
     if (currentView == View.TURBO_LIFT) {
         arrive()

@@ -2,6 +2,7 @@ object GameState {
     var shipName = "Prometheus"
     val players = mutableMapOf<String, Player>()
     val rooms = mutableMapOf<String, Room>()
+    var position: ShipPosition = ShipPosition()
 
     init {
         //Eventually load these from a ship file etc
