@@ -1,5 +1,7 @@
 import GameState.players
 import GameState.rooms
+import frames.RoomUpdate
+import frames.ShipPositionUpdate
 import frames.WSFrame
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -9,8 +11,8 @@ import views.helmView
 
 const val testing = true
 
-val testInputFrame: WSFrame? = null
-//val testInputFrame: WSFrame? = RoomUpdate("Bridge", 50, 10, 11)
+//val testInputFrame: WSFrame? = null
+val testInputFrame: WSFrame? = ShipPositionUpdate(ShipPosition(4,6,90))
 
 fun testView() = helmView()
 

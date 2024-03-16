@@ -19,6 +19,7 @@ fun WSFrame.parse() {
         is ReadyRoomUpdate -> updatedReadyRoom(this)
         is RoomUpdate -> receive()
         is ServerInfoUpdate -> receive()
+        is ShipPositionUpdate -> receive()
         is TravelUpdate -> receive()
         else -> {
             println("Did not recognize $this")
@@ -94,5 +95,12 @@ private fun CaptainFocus.receive() {
 
     if (playerState.focused != wasFocused){
         //TODO - update crew views
+    }
+}
+
+private fun ShipPositionUpdate.receive() {
+    GameState.shipPosition = position
+    if (currentView == View.HELM){
+        positionUpdate()
     }
 }

@@ -44,4 +44,4 @@ data class CaptainFocus(val playerId: String) : WSFrame
 data class HelmUpdate(val heading: Int, val velocity: Int, val warpEngaged: Boolean) : WSFrame
 
 @Serializable
-data class ShipPositionFrame(val position: ShipPosition) : WSFrame
+data class ShipPositionUpdate(val position: ShipPosition) : WSFrame

@@ -92,7 +92,7 @@ input[type=number] {
 }
 
 input[type=range][orient=vertical] {
-    appearance: slider-vertical;
+    writing-mode: vertical-lr;
     width: 8px;
     height: 100px;
     padding: 0 5px;
@@ -199,6 +199,18 @@ input[type=range][orient=vertical] {
 #velocity-slider  {
     margin: auto;
     height: 200px;
+}
+
+#heading-ticks {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin-left: 5%;
+}
+
+#velocity-ticks {
+  display: inline-block;
+  font-size: 14px;
 }
 
 .helm-table-row{

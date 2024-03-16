@@ -14,7 +14,6 @@ import org.w3c.dom.HTMLInputElement
 import replaceElement
 import wsSend
 
-private var heading = 0
 private var velocity = 0
 private var warpEngaged = false
 
@@ -39,11 +38,11 @@ fun helmView() {
                             id = "heading-slider"
                             min = "0"
                             max = "4"
-                            value = ((heading + 180 / 90)).toString()
+                            value = ((GameState.shipPosition.heading + 180 / 90)).toString()
                             list = "heading-ticks"
                             onChangeFunction = {
                                 val tickValue = el<HTMLInputElement>("heading-slider").value.toIntOrNull() ?: 0
-                                heading = tickValue * 90 - 180
+                                GameState.shipPosition.heading = tickValue * 90 - 180
                                 helmControlsUpdate()
                             }
                         }
@@ -52,7 +51,7 @@ fun helmView() {
                             (0..4).forEach {
                                 option {
                                     value = "$it"
-                                    label = "$it"
+                                    label = "${it * 90 - 180}"
                                 }
                             }
                         }
@@ -73,7 +72,12 @@ fun helmView() {
                         }
                         dataList {
                             id = "velocity-ticks"
-                            (0..10).forEach { option { value = it.toString() } }
+                            (0..10).forEach {
+                                option {
+                                    value = it.toString()
+                                    label = "${10 - it}"
+                                }
+                            }
                         }
                     }
                     div("warp-off") {
@@ -113,8 +117,7 @@ fun helmView() {
                         with(GameState.shipPosition) {
                             id = "ship-indicator"
                             src = "assets/icons/helm.svg"
-                            style = "top: ${40 * x}px; left: ${40 * y}px;"
-                            //TODO -rotate per heading
+                            style = "top: ${40 * x}px; left: ${40 * y}px; transform: rotate(${heading}deg);"
                         }
                     }
                 }
@@ -124,15 +127,15 @@ fun helmView() {
 }
 
 private fun helmControlsUpdate() {
-    wsSend(HelmUpdate(heading, velocity, warpEngaged))
+    wsSend(HelmUpdate(GameState.shipPosition.heading, velocity, warpEngaged))
 }
 
 fun positionUpdate() {
     el("ship-indicator").style.apply {
         with(GameState.shipPosition) {
-            top = "${40 * x}px;"
-            left = "${40 * y}px;"
-            //TODO -rotate per heading
+            top = "${60 * x}px"
+            left = "${40 * y}px"
+            transform = "rotate(${heading}deg)"
         }
     }
 }

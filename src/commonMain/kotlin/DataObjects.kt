@@ -30,6 +30,7 @@ data class Room(
 data class ShipPosition(
     var x: Int = 5,
     var y: Int = 5,
+    var heading: Int = 0,
     var sectorX: Int = 5,
     var sectorY: Int = 5,
 )
