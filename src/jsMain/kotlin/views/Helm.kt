@@ -1,5 +1,6 @@
 package views
 
+import Config
 import GameState
 import View
 import el
@@ -16,6 +17,7 @@ import wsSend
 
 private var velocity = 0
 private var warpEngaged = false
+private const val squareSize = 40
 
 fun helmView() {
     GameState.currentView = View.HELM
@@ -117,7 +119,7 @@ fun helmView() {
                         with(GameState.shipPosition) {
                             id = "ship-indicator"
                             src = "assets/icons/helm.svg"
-                            style = "top: ${40 * x}px; left: ${40 * y}px; transform: rotate(${heading}deg);"
+                            style = "top: ${x.toScreen()}px; left: ${y.toScreen()}px; transform: rotate(${heading}deg);"
                         }
                     }
                 }
@@ -133,9 +135,11 @@ private fun helmControlsUpdate() {
 fun positionUpdate() {
     el("ship-indicator").style.apply {
         with(GameState.shipPosition) {
-            top = "${60 * x}px"
-            left = "${40 * y}px"
+            top = "${x.toScreen()}px"
+            left = "${y.toScreen()}px"
             transform = "rotate(${heading}deg)"
         }
     }
 }
+
+private fun Int.toScreen() = this / Config.sectorDivisor * squareSize

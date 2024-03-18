@@ -12,7 +12,7 @@ import views.helmView
 const val testing = true
 
 //val testInputFrame: WSFrame? = null
-val testInputFrame: WSFrame? = ShipPositionUpdate(ShipPosition(4,6,90))
+val testInputFrame: WSFrame? = ShipPositionUpdate(ShipPosition(40,60,90))
 
 fun testView() = helmView()
 
