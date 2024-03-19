@@ -4,5 +4,5 @@ object Config {
     const val sectorDistance = 100
     const val maxSectors = 10
     const val sectorDivisor = sectorDistance / 10f
-    const val turnSpeed = 10
+    const val turnSpeed = 2
 }

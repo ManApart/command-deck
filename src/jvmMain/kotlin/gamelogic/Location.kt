@@ -35,7 +35,7 @@ private fun shipTravel(powerType: ShipSystem, velocityMultiplier: Int = 1) {
     } else {
         with(GameState.position) {
             val velocity = GameState.velocity * velocityMultiplier
-            turnShip()
+            turnShip(GameState.getPower(ShipSystem.THRUSTERS))
             val angle = GameState.position.heading.toRadians()
             val newX = x + (velocity * sin(angle))
             val newY = y + (velocity * cos(angle))
@@ -51,30 +51,31 @@ private fun shipTravel(powerType: ShipSystem, velocityMultiplier: Int = 1) {
     }
 }
 
-private fun turnShip() {
+private fun turnShip(power: Int) {
+    val speed = power * Config.turnSpeed
     with(GameState.position) {
         when {
             heading == 180 && desiredHeading < 0 -> {
-                heading = -180 + Config.turnSpeed
+                heading = -180 + speed
             }
 
             heading == -180 && desiredHeading > 0 -> {
-                heading = 180 - Config.turnSpeed
+                heading = 180 - speed
             }
 
             desiredHeading > heading -> {
-                if (desiredHeading - heading < Config.turnSpeed) {
+                if (desiredHeading - heading < speed) {
                     heading = desiredHeading
                 } else {
-                    heading += Config.turnSpeed
+                    heading += speed
                 }
             }
 
             desiredHeading < heading -> {
-                if (heading - desiredHeading < Config.turnSpeed) {
+                if (heading - desiredHeading < speed) {
                     heading = desiredHeading
                 } else {
-                    heading -= Config.turnSpeed
+                    heading -= speed
                 }
             }
         }
