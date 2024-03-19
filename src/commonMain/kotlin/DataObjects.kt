@@ -32,6 +32,7 @@ data class ShipPosition(
     var x: Int = 50,
     var y: Int = 50,
     var heading: Int = 0,
+    var desiredHeading: Int = 0,
     var sectorX: Int = 5,
     var sectorY: Int = 5,
 )

@@ -11,7 +11,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 fun HelmUpdate.receive() {
-    GameState.position.heading = heading
+    GameState.position.desiredHeading = heading
     GameState.velocity = velocity
     GameState.warpEngaged = warpEngaged
 }
@@ -35,7 +35,7 @@ private fun shipTravel(powerType: ShipSystem, velocityMultiplier: Int = 1) {
     } else {
         with(GameState.position) {
             val velocity = GameState.velocity * velocityMultiplier
-            //TODO - ship angle should take time
+            turnShip()
             val angle = GameState.position.heading.toRadians()
             val newX = x + (velocity * sin(angle))
             val newY = y + (velocity * cos(angle))
@@ -47,6 +47,36 @@ private fun shipTravel(powerType: ShipSystem, velocityMultiplier: Int = 1) {
             y = cleanY
             sectorX = cleanSectorX
             sectorY = cleanSectorY
+        }
+    }
+}
+
+private fun turnShip() {
+    with(GameState.position) {
+        when {
+            heading == 180 && desiredHeading < 0 -> {
+                heading = -180 + Config.turnSpeed
+            }
+
+            heading == -180 && desiredHeading > 0 -> {
+                heading = 180 - Config.turnSpeed
+            }
+
+            desiredHeading > heading -> {
+                if (desiredHeading - heading < Config.turnSpeed) {
+                    heading = desiredHeading
+                } else {
+                    heading += Config.turnSpeed
+                }
+            }
+
+            desiredHeading < heading -> {
+                if (heading - desiredHeading < Config.turnSpeed) {
+                    heading = desiredHeading
+                } else {
+                    heading -= Config.turnSpeed
+                }
+            }
         }
     }
 }
