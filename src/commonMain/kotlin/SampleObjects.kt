@@ -1,9 +1,9 @@
 fun initialRooms() = listOf(
-    Room("Bridge", System.BRIDGE),
-    Room("Sensors", System.SENSORS),
-    Room("Warp Core", System.WARP_CORE),
-    Room("Med Bay", System.MED_BAY),
-    Room("Weapons", System.WEAPONS),
-    Room("Engineering", System.ENGINES),
-    Room("Shield Generator", System.SHIELDS),
+    Room("Bridge", ShipSystem.BRIDGE),
+    Room("Sensors", ShipSystem.SENSORS),
+    Room("Warp Core", ShipSystem.WARP_CORE),
+    Room("Med Bay", ShipSystem.MED_BAY),
+    Room("Weapons", ShipSystem.WEAPONS),
+    Room("Engineering", ShipSystem.ENGINES),
+    Room("Shield Generator", ShipSystem.SHIELDS),
 )

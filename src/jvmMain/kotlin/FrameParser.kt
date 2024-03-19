@@ -10,7 +10,7 @@ suspend fun WSFrame.parse(connection: Connection) {
         is MessageUpdate -> receive(connection)
         is RepairUpdate -> receive()
         is RoomUpdate -> receive()
-        is HelmUpdate -> receive(connection)
+        is HelmUpdate -> receive()
         is TravelUpdate -> receive(connection)
         is UserLogin -> receive(connection)
         else -> {

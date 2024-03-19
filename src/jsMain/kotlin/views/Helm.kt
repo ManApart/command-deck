@@ -16,15 +16,16 @@ import replaceElement
 import wsSend
 
 private var velocity = 0
+private var heading = 0
 private var warpEngaged = false
 private const val squareSize = 40
+private const val sectorWidth = Config.sectorDivisor * squareSize
 
 fun helmView() {
     GameState.currentView = View.HELM
     replaceElement {
         nav()
         div {
-            h1 { +"Helm" }
             p {
                 id = "helm-readout"
                 with(GameState.shipPosition) {
@@ -40,11 +41,11 @@ fun helmView() {
                             id = "heading-slider"
                             min = "0"
                             max = "4"
-                            value = ((GameState.shipPosition.heading + 180 / 90)).toString()
+                            value = ((heading + 180 / 90)).toString()
                             list = "heading-ticks"
                             onChangeFunction = {
                                 val tickValue = el<HTMLInputElement>("heading-slider").value.toIntOrNull() ?: 0
-                                GameState.shipPosition.heading = tickValue * 90 - 180
+                                heading = tickValue * 90 - 180
                                 helmControlsUpdate()
                             }
                         }
@@ -104,6 +105,7 @@ fun helmView() {
                 }
                 div {
                     id = "ship-position-display"
+                    //TODO - add labels 1-10
                     table {
                         id = "helm-table"
                         (0..10).forEach { _ ->
@@ -129,14 +131,15 @@ fun helmView() {
 }
 
 private fun helmControlsUpdate() {
-    wsSend(HelmUpdate(GameState.shipPosition.heading, velocity, warpEngaged))
+    wsSend(HelmUpdate(heading, velocity, warpEngaged))
 }
 
 fun positionUpdate() {
-    el("ship-indicator").style.apply {
-        with(GameState.shipPosition) {
-            top = "${x.toScreen()}px"
-            left = "${y.toScreen()}px"
+    with(GameState.shipPosition) {
+        el("helm-readout").innerText = "Sector ($sectorX, $sectorY)"
+        el("ship-indicator").style.apply {
+            top = "${sectorWidth - y.toScreen()}px"
+            left = "${x.toScreen()}px"
             transform = "rotate(${heading}deg)"
         }
     }

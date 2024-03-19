@@ -90,6 +90,7 @@ fun main() {
             }
         }
     }
+    GameManager.start()
 
     embeddedServer(Netty, environment).start(wait = true)
 }
