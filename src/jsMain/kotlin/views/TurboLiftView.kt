@@ -28,6 +28,7 @@ fun turboLiftView() {
         nav()
         div {
             h1 { +"The ${GameState.shipName}" }
+            crewmanTitle()
             div {
                 id = "rooms"
                 GameState.rooms.values.forEach { room ->

@@ -28,6 +28,7 @@ fun roomView() {
                 style ="display: inline-block;"
                 +room.name
             }
+            crewmanTitle()
             div("room") {
                 id = "room-${room.name}"
                 div {

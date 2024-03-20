@@ -23,7 +23,6 @@ fun TagConsumer<HTMLElement>.nav() {
             navButton("Turbo Lift", View.TURBO_LIFT) { turboLiftView() }
             navButton("Room", View.ROOM) { roomView() }
         }
-        p { +"${playerState.role.title} ${playerState.name}" }
     }
 }
 
@@ -40,5 +39,12 @@ private fun TagConsumer<HTMLElement>.storyTellerViews() {
     button(classes = "nav-button ${currentView.matchClass(View.ROOM_MANAGER)}") {
         +"Room Manager"
         onClickFunction = { manageRoomsView() }
+    }
+}
+
+fun TagConsumer<HTMLElement>.crewmanTitle() {
+    p {
+        id = "crewman-title"
+        +"${playerState.role.title} ${playerState.name}"
     }
 }

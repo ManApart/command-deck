@@ -26,12 +26,13 @@ fun helmView() {
     replaceElement {
         nav()
         div {
-            p {
+            h1 {
                 id = "helm-readout"
                 with(GameState.shipPosition) {
                     +"Sector ($sectorX, $sectorY)"
                 }
             }
+            crewmanTitle()
             div("helm") {
                 div {
                     id = "helm-controls"
@@ -105,7 +106,6 @@ fun helmView() {
                 }
                 div {
                     id = "ship-position-display"
-                    //TODO - add labels 1-10
                     table {
                         id = "helm-table"
                         (0..10).forEach { y ->
