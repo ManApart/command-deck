@@ -108,10 +108,14 @@ fun helmView() {
                     //TODO - add labels 1-10
                     table {
                         id = "helm-table"
-                        (0..10).forEach { _ ->
+                        (0..10).forEach { y ->
                             tr("helm-table-row") {
-                                (0..10).forEach { _ ->
-                                    td("helm-table-col") {
+                                (0..10).forEach { x ->
+                                    when {
+                                        x + y == 0 -> td { }
+                                        x == 0 -> td("helm-table-heading") { +"$y" }
+                                        y == 0 -> td("helm-table-heading") { +"$x" }
+                                        else -> td("helm-table-col") { }
                                     }
                                 }
                             }
