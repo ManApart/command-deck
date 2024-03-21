@@ -1,19 +1,20 @@
 import GameState.players
 import GameState.rooms
+import frames.DatabaseSearchResult
 import frames.MessageUpdate
-import frames.RoomUpdate
-import frames.ShipPositionUpdate
 import frames.WSFrame
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import views.helmView
 import views.scienceView
 
 const val testing = true
 
-val testInputFrame: WSFrame = MessageUpdate("Test scan message")
+private val testInputFrames: List<WSFrame> = listOf(
+    MessageUpdate("Test scan message"),
+    DatabaseSearchResult(Topic("Test", "This is a test topic.\nHere is a second paragraph"))
+)
 
 fun testView() = scienceView()
 
@@ -39,7 +40,7 @@ fun fireTestInputEvent() {
     if (testing) {
         CoroutineScope(Dispatchers.Default).launch {
             delay(500)
-            testInputFrame.parse()
+            testInputFrames.forEach { it.parse() }
         }
     }
 }

@@ -38,4 +38,4 @@ data class ShipPosition(
 )
 
 @Serializable
-data class Topic(val name: String, val tags: List<String>, val data: String)
+data class Topic(val name: String, val data: String)

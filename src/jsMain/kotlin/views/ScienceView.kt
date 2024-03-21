@@ -10,11 +10,8 @@ import kotlinx.html.js.div
 import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.js.onKeyPressFunction
-import org.w3c.dom.HTMLInputElement
-import org.w3c.dom.HTMLSelectElement
-import org.w3c.dom.HTMLTextAreaElement
+import org.w3c.dom.*
 import org.w3c.dom.events.KeyboardEvent
-import org.w3c.dom.get
 import replaceElement
 import wsSend
 
@@ -47,9 +44,8 @@ fun scienceView() {
                 }
                 div {
                     id = "science-scan-results-wrapper"
-                    textArea {
+                    p {
                         id = "science-scan-results"
-                        readonly = true
                     }
                 }
             }
@@ -84,9 +80,8 @@ fun scienceView() {
                 }
                 div {
                     id = "science-search-results-wrapper"
-                    textArea {
+                    p {
                         id = "science-search-results"
-                        readonly = true
                     }
                 }
 
@@ -110,8 +105,8 @@ fun updateTopics(topics: List<String>) {
 }
 
 fun searchResults(topic: Topic) {
-    val text = el<HTMLTextAreaElement>("science-search-results")
-    text.value = "${topic.name}\n${topic.tags}\n\n${topic.data}"
+    val text = el("science-search-results")
+    text.innerHTML = "${topic.name}<br/><br/><br/>${topic.data.replace("\n", "<br/>")}"
 }
 
 private fun doScan() {
