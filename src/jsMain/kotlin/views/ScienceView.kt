@@ -9,9 +9,11 @@ import kotlinx.html.dom.append
 import kotlinx.html.js.div
 import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onClickFunction
+import kotlinx.html.js.onKeyPressFunction
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.HTMLSelectElement
 import org.w3c.dom.HTMLTextAreaElement
+import org.w3c.dom.events.KeyboardEvent
 import org.w3c.dom.get
 import replaceElement
 import wsSend
@@ -56,6 +58,13 @@ fun scienceView() {
                 h3 { +"Science Database" }
                 input {
                     id = "search-input"
+                    onKeyPressFunction = {
+                        it as KeyboardEvent
+                        if (it.key == "Enter") {
+                            val topic = el<HTMLInputElement>("search-input").value
+                            searchDatabase(topic)
+                        }
+                    }
                 }
                 button {
                     +"Search"
@@ -102,7 +111,7 @@ fun updateTopics(topics: List<String>) {
 
 fun searchResults(topic: Topic) {
     val text = el<HTMLTextAreaElement>("science-search-results")
-    text.innerText = "${topic.name}\r\n${topic.tags}\n\n${topic.data}"
+    text.value = "${topic.name}\n${topic.tags}\n\n${topic.data}"
 }
 
 private fun doScan() {

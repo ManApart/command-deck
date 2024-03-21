@@ -33,6 +33,10 @@ h1{
     margin-bottom: 5px;
 }
 
+textarea{
+    width: 100%;
+}
+
 .hidden {
     display: none;
 }
@@ -259,4 +263,8 @@ input[type=range][orient=vertical] {
 }
 .warp-on {
     background-color: var(--action);
+}
+
+#science-search-results{
+    height: 150px;
 }
