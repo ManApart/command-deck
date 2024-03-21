@@ -13,6 +13,8 @@ fun WSFrame.parse() {
     println("Parsing frame $this")
     when (this) {
         is CaptainFocus -> receive()
+        is DatabaseSearchResult -> receive()
+        is DatabaseTopics -> receive()
         is GameStart -> receive()
         is MessageUpdate -> receive()
         is Promotion -> receive()
@@ -30,6 +32,7 @@ fun WSFrame.parse() {
 private fun MessageUpdate.receive() {
     if (alert) window.alert(message)
     println("Server said: $message")
+    if (currentView == View.SCIENCE) receiveMessage(message)
 }
 
 private fun ServerInfoUpdate.receive() {
@@ -51,6 +54,17 @@ private fun GameStart.receive() {
     if (playerState.role == CrewRole.STORY_TELLER) {
         manageRoomsView()
     } else turboLiftView()
+}
+
+private fun DatabaseTopics.receive() {
+    if (currentView == View.SCIENCE){
+        updateTopics(topics)
+    }
+}
+private fun DatabaseSearchResult.receive() {
+    if (currentView == View.SCIENCE){
+        searchResults(topic)
+    }
 }
 
 private fun TravelUpdate.receive() {

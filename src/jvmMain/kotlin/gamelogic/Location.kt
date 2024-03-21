@@ -1,9 +1,12 @@
 package gamelogic
 
 import Config
+import Connection
 import GameState
 import ShipSystem
 import frames.HelmUpdate
+import frames.MessageUpdate
+import frames.Scan
 import frames.ShipPositionUpdate
 import sendAll
 import kotlin.math.PI
@@ -14,6 +17,10 @@ fun HelmUpdate.receive() {
     GameState.position.desiredHeading = heading
     GameState.velocity = velocity
     GameState.warpEngaged = warpEngaged
+}
+
+suspend fun Scan.receive(connection: Connection) {
+    connection.send(MessageUpdate("Nothing found at scan location ($x,$y)"))
 }
 
 suspend fun shipTravel() {

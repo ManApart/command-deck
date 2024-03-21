@@ -5,6 +5,7 @@ import Hazard
 import Player
 import Room
 import ShipPosition
+import Topic
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -45,3 +46,15 @@ data class HelmUpdate(val heading: Int, val velocity: Int, val warpEngaged: Bool
 
 @Serializable
 data class ShipPositionUpdate(val position: ShipPosition) : WSFrame
+
+@Serializable
+data class Scan(val x: Int, val y: Int) : WSFrame
+
+@Serializable
+data class DatabaseSearch(val topic: String) : WSFrame
+
+@Serializable
+data class DatabaseSearchResult(val topic: Topic) : WSFrame
+
+@Serializable
+data class DatabaseTopics(val topics: List<String>) : WSFrame

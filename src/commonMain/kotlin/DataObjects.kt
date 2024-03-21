@@ -36,3 +36,6 @@ data class ShipPosition(
     var sectorX: Int = 5,
     var sectorY: Int = 5,
 )
+
+@Serializable
+data class Topic(val name: String, val tags: List<String>, val data: String)

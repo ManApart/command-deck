@@ -5,6 +5,7 @@ suspend fun WSFrame.parse(connection: Connection) {
     println("Parsing frame $this")
     when (this) {
         is CaptainFocus -> receive()
+        is DatabaseSearch -> receive(connection)
         is Promotion -> receive()
         is GameStart -> receive(connection)
         is MessageUpdate -> receive(connection)
@@ -12,6 +13,7 @@ suspend fun WSFrame.parse(connection: Connection) {
         is RoomUpdate -> receive()
         is HelmUpdate -> receive()
         is TravelUpdate -> receive(connection)
+        is Scan -> receive(connection)
         is UserLogin -> receive(connection)
         else -> {
             println("Did not recognize $this")

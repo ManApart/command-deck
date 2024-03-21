@@ -1,5 +1,6 @@
 import GameState.players
 import GameState.rooms
+import frames.MessageUpdate
 import frames.RoomUpdate
 import frames.ShipPositionUpdate
 import frames.WSFrame
@@ -8,20 +9,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import views.helmView
+import views.scienceView
 
 const val testing = true
 
-//val testInputFrame: WSFrame? = null
-val testInputFrame: WSFrame? = ShipPositionUpdate(ShipPosition(40,60,90, 6))
+val testInputFrame: WSFrame = MessageUpdate("Test scan message")
 
-fun testView() = helmView()
+fun testView() = scienceView()
 
 fun initializeTestingData() {
     if (testing) {
         with(playerState) {
             id = "0"
             name = "Kirk"
-            role = CrewRole.HELM
+            role = CrewRole.SCIENCE
             rooms["Bridge"]?.players?.add("0")
             rooms["Bridge"]?.players?.add("1")
 
@@ -38,7 +39,7 @@ fun fireTestInputEvent() {
     if (testing) {
         CoroutineScope(Dispatchers.Default).launch {
             delay(500)
-            testInputFrame?.parse()
+            testInputFrame.parse()
         }
     }
 }

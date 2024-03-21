@@ -25,6 +25,7 @@ enum class View {
     HELM,
     MED_BAY,
     WEAPONS,
+    SCIENCE,
     SHIELDS,
     READY_ROOM,
     ROOM,
