@@ -81,6 +81,9 @@ fun scienceView() {
                 div {
                     id = "science-search-results-wrapper"
                     p {
+                        id = "science-search-results-title"
+                    }
+                    div {
                         id = "science-search-results"
                     }
                 }
@@ -105,8 +108,13 @@ fun updateTopics(topics: List<String>) {
 }
 
 fun searchResults(topic: Topic) {
-    val text = el("science-search-results")
-    text.innerHTML = "${topic.name}<br/><br/><br/>${topic.data.replace("\n", "<br/>")}"
+    val title = el("science-search-results-title")
+    title.innerHTML = topic.name
+    val results = el("science-search-results")
+    results.innerHTML = ""
+    results.append {
+        topic.data.split("\n").forEach { p { +it } }
+    }
 }
 
 private fun doScan() {

@@ -1,7 +1,1 @@
-[
-  {
-    "name": "Science",
-    "tags": ["Role", "Station"],
-    "data": "The science role acts as the ships detective."
-  }
-]
+[{"name":"Captain","data":"The captain coordinates the rest of the crew, handles promotions, and can buff one other commander at a time."},{"name":"Pilot","data":"The pilot maneuvers the ship both with thrusters and the warp core."},{"name":"Science","data":"The science role acts as the ships detective."}]
