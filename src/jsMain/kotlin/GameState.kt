@@ -5,7 +5,8 @@ object GameState {
     var players = mapOf<String, Player>()
     var rooms = mapOf<String, Room>()
     var currentView = View.TURBO_LIFT
-    var shipPosition: ShipPosition = ShipPosition()
+    var shipPosition = ShipPosition()
+    var shields = Shields()
 
     init {
         rooms = initialRooms().associateBy { it.name }

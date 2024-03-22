@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import views.scienceView
+import views.shieldsView
 
 const val testing = true
 
@@ -16,7 +17,7 @@ private val testInputFrames: List<WSFrame> = listOf(
     DatabaseSearchResult(Topic("Test", "This is a test topic.\nHere is a second paragraph"))
 )
 
-fun testView() = scienceView()
+fun testView() = shieldsView()
 
 fun initializeTestingData() {
     if (testing) {

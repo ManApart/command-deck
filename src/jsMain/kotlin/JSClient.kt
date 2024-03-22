@@ -8,6 +8,7 @@ import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.dom.addClass
 import kotlinx.dom.createElement
@@ -18,9 +19,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.WebSocket
-import views.crewView
 import views.readyRoomView
-import views.roomView
 
 lateinit var webSocket: WebSocket
 
@@ -80,6 +79,19 @@ fun replaceElement(id: String = "root", rootClasses: String? = null, newHtml: su
             }
         }
         root.replaceWith(newRoot)
+    }
+}
+
+fun onElementExists(id: String, maxTries: Int = 100, callback: () -> Unit){
+    CoroutineScope(Dispatchers.Default).launch {
+        var tries = 0
+        var exists = false
+        while (tries < maxTries && !exists){
+            exists = el<HTMLElement?>(id) != null
+            tries++
+            delay(100)
+        }
+        if (exists) callback()
     }
 }
 
