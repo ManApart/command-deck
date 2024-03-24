@@ -16,7 +16,7 @@ fun TagConsumer<HTMLElement>.slider(id: String, min: Int, max: Int, value: Int, 
         list = "$id-ticks"
         if (vertical) attributes["orient"] = "vertical"
         onChangeFunction = {
-            val tickValue = el<HTMLInputElement>("$id-ticks").value.toIntOrNull() ?: 0
+            val tickValue = el<HTMLInputElement>(id).value.toIntOrNull() ?: 0
             onChange(tickValue)
         }
     }
