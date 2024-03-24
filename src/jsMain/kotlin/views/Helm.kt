@@ -3,6 +3,7 @@ package views
 import Config
 import GameState
 import View
+import components.slider
 import el
 import frames.HelmUpdate
 import kotlinx.dom.addClass
@@ -38,50 +39,15 @@ fun helmView() {
                     id = "helm-controls"
                     div("helm-slider-wrapper") {
                         p { +"Heading" }
-                        input(InputType.range) {
-                            id = "heading-slider"
-                            min = "0"
-                            max = "4"
-                            value = ((heading + 180 / 90)).toString()
-                            list = "heading-ticks"
-                            onChangeFunction = {
-                                val tickValue = el<HTMLInputElement>("heading-slider").value.toIntOrNull() ?: 0
-                                heading = tickValue * 90 - 180
-                                helmControlsUpdate()
-                            }
-                        }
-                        dataList {
-                            id = "heading-ticks"
-                            (0..4).forEach {
-                                option {
-                                    value = "$it"
-                                    label = "${it * 90 - 180}"
-                                }
-                            }
+                        slider("heading-slider", 0, 4, heading + 180 / 90, { it * 90 - 180 }) {
+                            heading = it * 90 - 180
+                            helmControlsUpdate()
                         }
                     }
                     div("helm-slider-wrapper") {
                         p { +"Velocity" }
-                        input(InputType.range) {
-                            id = "velocity-slider"
-                            min = "0"
-                            max = "10"
-                            value = velocity.toString()
-                            list = "velocity-ticks"
-                            attributes["orient"] = "vertical"
-                            onChangeFunction = {
-                                velocity = el<HTMLInputElement>("velocity-slider").value.toIntOrNull() ?: 0
-                                helmControlsUpdate()
-                            }
-                        }
-                        dataList {
-                            id = "velocity-ticks"
-                            (0..10).forEach {
-                                option {
-                                    value = it.toString()
-                                    label = "${10 - it}"
-                                }
-                            }
+                        slider("velocity-slider", 0, 10, velocity, {10-it}, true){
+                            helmControlsUpdate()
                         }
                     }
                     div("warp-off") {

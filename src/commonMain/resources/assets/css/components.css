@@ -1,0 +1,91 @@
+
+/*Toggle*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.toggle:before {
+  border-radius: 50%;
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .2s;
+}
+
+input:checked + .toggle {
+  background-color: #2196F3;
+}
+
+input:focus + .toggle {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .toggle:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+
+/*Slider*/
+input[type=range][orient=vertical] {
+    writing-mode: vertical-lr;
+    width: 8px;
+    padding: 0 5px;
+}
+
+.slider-wrapper {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.horizontal-slider  {
+    width: 90%;
+}
+
+.vertical-slider  {
+    margin: auto;
+    height: 200px;
+}
+
+.slider-ticks {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin-left: 5%;
+}
+
+.vertical-slider-ticks {
+  display: inline-block;
+  font-size: 14px;
+}

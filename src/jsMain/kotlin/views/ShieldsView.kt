@@ -1,5 +1,6 @@
 package views
 
+import components.slider
 import el
 import kotlinx.browser.window
 import kotlinx.html.*
@@ -26,6 +27,7 @@ private val span = PI * 2.25
 private data class GraphPoint(var a: Double, var x: Int, var c: String = "hsl(th, 75%, 55%)")
 
 //TODO - make graph a component so it can be used by weapons and comms
+//Use amplitude for power
 fun shieldsView() {
     GameState.currentView = View.SHIELDS
     replaceElement {
@@ -39,9 +41,24 @@ fun shieldsView() {
                 id = "shield-power-distribution"
             }
             div {
-                id = "shield-frequency"
-                canvas {
-                    id = "frequency-canvas"
+                id = "fore-shield-frequency"
+                val foreAmplitude = 5
+                val foreFrequency = 1
+                div("helm-slider-wrapper") {
+                    p { +"Amplitude" }
+                    slider("fore-amplitude", 0, 10, foreAmplitude, vertical = true) {
+                    }
+                }
+                div("helm-slider-wrapper") {
+                    p { +"Frequency" }
+                    slider("fore-frequency", 0, 10, foreFrequency) {
+                    }
+                }
+
+                div("shield-frequency") {
+                    canvas {
+                        id = "frequency-canvas"
+                    }
                 }
             }
         }
@@ -54,9 +71,9 @@ private fun startGraph() {
     c = canvas.getContext("2d") as CanvasRenderingContext2D
     w = canvas.width.toDouble()
     h = canvas.height.toDouble()
-    width = amount*(radius*2 + distance)
+    width = amount * (radius * 2 + distance)
     arr = (0 until amount).mapIndexed { i, _ ->
-        GraphPoint(span/ amount*i, i*(radius*2+ distance))
+        GraphPoint(span / amount * i, i * (radius * 2 + distance))
     }.toTypedArray()
 
     window.requestAnimationFrame(::loop)
@@ -67,13 +84,15 @@ private fun loop(time: Double) {
     c.fillRect(0.0, 0.0, w, h)
 
     arr.forEach {
-        it.a += PI/180*4
+        it.a += PI / 180 * 4
         c.beginPath()
-        c.arc(it.x - width/2 + w/2, sin(it.a)* height + h/2, radius.toDouble(), 0.0, PI*2)
+        c.arc(it.x - width / 2 + w / 2, sin(it.a) * height + h / 2, radius.toDouble(), 0.0, PI * 2)
         c.closePath()
-        c.fillStyle = it.c.replace("th", "${it.a*20}")
+        c.fillStyle = it.c.replace("th", "${it.a * 20}")
         c.fill()
     }
 
-    window.requestAnimationFrame(::loop)
+    if (el<HTMLCanvasElement?>("frequency-canvas") != null) {
+        window.requestAnimationFrame(::loop)
+    }
 }

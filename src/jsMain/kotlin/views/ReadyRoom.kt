@@ -3,6 +3,7 @@ package views
 import el
 import CrewRole
 import GameState
+import components.toggle
 import frames.GameStart
 import frames.ReadyRoomUpdate
 import frames.UserLogin
@@ -73,16 +74,8 @@ fun readyRoomView() {
             }
             div {
                 span { +"Ready Up" }
-                label("switch") {
-                    input(InputType.checkBox) {
-                        id = "ready-up-input"
-                        onChangeFunction = {
-                            if (el<HTMLInputElement>("ready-up-input").checked) {
-                                updateRole()
-                            }
-                        }
-                    }
-                    span("slider") { }
+                toggle("ready-up-input"){
+                    if (it) updateRole()
                 }
             }
 
@@ -103,9 +96,7 @@ fun readyRoomView() {
                         onClickFunction = { startGame() }
                     }
                     span { +"Drop unready Players: " }
-                    input(InputType.checkBox) {
-                        id = "force-start"
-                    }
+                    toggle("force-start"){}
                 }
             }
         }

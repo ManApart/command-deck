@@ -2,22 +2,26 @@ import GameState.players
 import GameState.rooms
 import frames.DatabaseSearchResult
 import frames.MessageUpdate
+import frames.ReadyRoomUpdate
 import frames.WSFrame
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import views.helmView
+import views.readyRoomView
 import views.scienceView
 import views.shieldsView
 
 const val testing = true
 
-private val testInputFrames: List<WSFrame> = listOf(
-    MessageUpdate("Test scan message"),
-    DatabaseSearchResult(Topic("Test", "This is a test topic.\nHere is a second paragraph"))
-)
-
 fun testView() = shieldsView()
+
+private val testInputFrames: List<WSFrame> = listOf(
+//    MessageUpdate("Test scan message"),
+//    DatabaseSearchResult(Topic("Test", "This is a test topic.\nHere is a second paragraph"))
+//    ReadyRoomUpdate(players)
+)
 
 fun initializeTestingData() {
     if (testing) {
