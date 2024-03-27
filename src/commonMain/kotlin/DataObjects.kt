@@ -43,4 +43,4 @@ data class Topic(val name: String, val data: String)
 enum class Direction { FORE, AFT, PORT, STARBOARD }
 
 @Serializable
-data class Shields(val amplitude: Int = 1, val frequency: Int = 1, val levels: Map<Direction, Int> = Direction.entries.associateWith { 0 })
+data class Shield(val amplitude: Int = 1, val frequency: Int = 1, val level: Int = 0)

@@ -33,19 +33,19 @@ data class SineGraph(
 
 data class GraphPoint(var a: Double, var x: Int, var c: String = "hsl(th, 75%, 55%)")
 
-fun TagConsumer<HTMLElement>.sineGraph(id: String, wrapperClasses: String = "", amplitude: Int = 5, frequency: Int= 1): SineGraph {
+fun TagConsumer<HTMLElement>.sineGraph(id: String, wrapperClasses: String = "", amplitude: Int = 5, frequency: Int= 1, offset: Int = 1): SineGraph {
     div(wrapperClasses) {
         canvas {
             this.id = id
         }
     }
     val graph = SineGraph(id, amplitude, frequency)
-    onElementExists(id, callback = { startGraph(graph) })
+    onElementExists(id, callback = { startGraph(graph, offset) })
     return graph
 }
 
 
-private fun startGraph(graph: SineGraph) {
+private fun startGraph(graph: SineGraph, offset: Int) {
     with(graph) {
         val canvas = el<HTMLCanvasElement>(id)
         c = canvas.getContext("2d") as CanvasRenderingContext2D
@@ -53,7 +53,7 @@ private fun startGraph(graph: SineGraph) {
         h = canvas.height.toDouble()
         width = amount * (radius * 2 + distance)
         arr = (0 until amount).mapIndexed { i, _ ->
-            GraphPoint(span / amount * i, i * (radius * 2 + distance))
+            GraphPoint(span / amount * (i+offset), i * (radius * 2 + distance))
         }.toTypedArray()
     }
     window.requestAnimationFrame { loop(it, graph) }

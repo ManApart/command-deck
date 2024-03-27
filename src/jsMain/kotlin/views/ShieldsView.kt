@@ -11,7 +11,7 @@ import kotlinx.html.js.div
 import org.w3c.dom.HTMLElement
 import replaceElement
 
-
+private val graphs = mutableMapOf<Direction, SineGraph>()
 
 //Use amplitude for power
 fun shieldsView() {
@@ -25,26 +25,29 @@ fun shieldsView() {
             crewmanTitle()
             div {
                 id = "shield-power-distribution"
+                p {
+                    id = "power-display"
+                    +"Power: ${GameState.shields.values.sumOf { it.level }}/${GameState.power[ShipSystem.SHIELDS] ?: 0}"
+                }
             }
             div {
                 id = "shield-controls"
-                shieldSection(Direction.FORE)
-                shieldSection(Direction.AFT)
-                shieldSection(Direction.PORT)
-                shieldSection(Direction.STARBOARD)
+                shieldSection(Direction.FORE,0)
+                shieldSection(Direction.AFT, 10)
+                shieldSection(Direction.PORT, 20)
+                shieldSection(Direction.STARBOARD, 30)
             }
         }
     }
 }
 
-private fun TagConsumer<HTMLElement>.shieldSection(direction: Direction){
+private fun TagConsumer<HTMLElement>.shieldSection(direction: Direction, offset: Int) {
     lateinit var graph: SineGraph
+    val shield = GameState.shields[direction]!!
     div("shield-section") {
         val directionName = direction.name.lowercase()
         id = "$directionName-shield-frequency-section"
         //TODO - get from game state
-        val foreAmplitude = 5
-        val foreFrequency = 1
 
         h3("shield-header") { +"${directionName.capitalize()} Shields" }
 
@@ -52,18 +55,22 @@ private fun TagConsumer<HTMLElement>.shieldSection(direction: Direction){
             //TODO - make analog and maybe make both sliders drag on canvas
             div("shield-amplitude") {
                 p { +"Amplitude" }
-                slider("$directionName-amplitude", 0, 10, foreAmplitude, { 10 - it }, vertical = true) {
+                slider("$directionName-amplitude", 0, 10, shield.amplitude, { 10 - it }, vertical = true) {
                     graph.amplitude = it
                 }
             }
-            graph = sineGraph("$directionName-shield-frequency", "shield-frequency-wrapper")
+            graph = sineGraph("$directionName-shield-frequency", "shield-frequency-wrapper", shield.amplitude, shield.frequency, offset)
         }
         div("shield-frequency") {
             p { +"Frequency" }
-            slider("$directionName-frequency", 1, 5, foreFrequency) {
+            slider("$directionName-frequency", 1, 5, shield.frequency) {
                 graph.frequency = it
             }
         }
-
     }
+    graphs[direction] = graph
+}
+
+private fun updateShields() {
+
 }

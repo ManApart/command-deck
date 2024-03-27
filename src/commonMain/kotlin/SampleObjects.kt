@@ -7,3 +7,5 @@ fun initialRooms() = listOf(
     Room("Engineering", ShipSystem.ENGINES),
     Room("Shield Generator", ShipSystem.SHIELDS),
 )
+
+fun initialShields() = Direction.entries.associateWith { Shield() }
