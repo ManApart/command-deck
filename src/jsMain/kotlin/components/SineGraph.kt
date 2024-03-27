@@ -33,8 +33,8 @@ data class SineGraph(
 
 data class GraphPoint(var a: Double, var x: Int, var c: String = "hsl(th, 75%, 55%)")
 
-fun TagConsumer<HTMLElement>.sineGraph(id: String, amplitude: Int = 5, frequency: Int= 1): SineGraph {
-    div("$id-wrapper") {
+fun TagConsumer<HTMLElement>.sineGraph(id: String, wrapperClasses: String = "", amplitude: Int = 5, frequency: Int= 1): SineGraph {
+    div(wrapperClasses) {
         canvas {
             this.id = id
         }
