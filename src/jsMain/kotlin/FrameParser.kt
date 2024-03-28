@@ -1,4 +1,5 @@
 import GameState.currentView
+import GameState.power
 import frames.*
 import kotlinx.browser.window
 import kotlinx.html.div
@@ -18,10 +19,12 @@ fun WSFrame.parse() {
         is GameStart -> receive()
         is MessageUpdate -> receive()
         is Promotion -> receive()
+        is PowerUpdate -> receive()
         is ReadyRoomUpdate -> updatedReadyRoom(this)
         is RoomUpdate -> receive()
         is ServerInfoUpdate -> receive()
         is ShipPositionUpdate -> receive()
+        is ShieldsUpdate -> receive()
         is TravelUpdate -> receive()
         else -> {
             println("Did not recognize $this")
@@ -116,5 +119,20 @@ private fun ShipPositionUpdate.receive() {
     GameState.shipPosition = position
     if (currentView == View.HELM){
         positionUpdate()
+    }
+}
+
+private fun PowerUpdate.receive() {
+    GameState.power = power
+    when (currentView){
+        View.SHIELDS -> updateShields()
+        else -> {}
+    }
+}
+private fun ShieldsUpdate.receive() {
+    GameState.shields = shields
+    when (currentView){
+        View.SHIELDS -> updateShields()
+        else -> {}
     }
 }

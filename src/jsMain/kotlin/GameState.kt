@@ -4,7 +4,7 @@ object GameState {
     var shipName = "Prometheus"
     var players = mapOf<String, Player>()
     var rooms = mapOf<String, Room>()
-    val power = mapOf<ShipSystem, Int>()
+    var power = mapOf<ShipSystem, Int>()
     var currentView = View.TURBO_LIFT
     var shipPosition = ShipPosition()
     var shields = mapOf<Direction, Shield>()

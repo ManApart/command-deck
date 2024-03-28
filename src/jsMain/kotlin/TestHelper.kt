@@ -1,9 +1,6 @@
 import GameState.players
 import GameState.rooms
-import frames.DatabaseSearchResult
-import frames.MessageUpdate
-import frames.ReadyRoomUpdate
-import frames.WSFrame
+import frames.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -20,7 +17,9 @@ fun testView() = shieldsView()
 private val testInputFrames: List<WSFrame> = listOf(
 //    MessageUpdate("Test scan message"),
 //    DatabaseSearchResult(Topic("Test", "This is a test topic.\nHere is a second paragraph"))
-//    ReadyRoomUpdate(players)
+//    ReadyRoomUpdate(players),
+    PowerUpdate(mapOf(ShipSystem.SHIELDS to 10)),
+    ShieldsUpdate(Direction.entries.associateWith { Shield(3,2) })
 )
 
 fun initializeTestingData() {

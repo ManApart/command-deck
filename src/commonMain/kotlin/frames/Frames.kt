@@ -1,10 +1,13 @@
 package frames
 
 import CrewRole
+import Direction
 import Hazard
 import Player
 import Room
+import Shield
 import ShipPosition
+import ShipSystem
 import Topic
 import kotlinx.serialization.Serializable
 
@@ -58,3 +61,9 @@ data class DatabaseSearchResult(val topic: Topic) : WSFrame
 
 @Serializable
 data class DatabaseTopics(val topics: List<String>) : WSFrame
+
+@Serializable
+data class PowerUpdate(val power: Map<ShipSystem, Int>) : WSFrame
+
+@Serializable
+data class ShieldsUpdate(val shields: Map<Direction, Shield>) : WSFrame
