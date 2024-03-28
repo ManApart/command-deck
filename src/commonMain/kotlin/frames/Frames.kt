@@ -27,7 +27,7 @@ data class UserLogin(val name: String, val role: CrewRole) : WSFrame
 data class ReadyRoomUpdate(val crew: Map<String, Player>) : WSFrame
 
 @Serializable
-data class GameStart(val shipName: String, val players: Map<String, Player>, val rooms: Map<String, Room>, val forceStart: Boolean = false) : WSFrame
+data class GameStart(val shipName: String, val players: Map<String, Player>, val rooms: Map<String, Room>, val power: Map<ShipSystem, Int>, val forceStart: Boolean = false) : WSFrame
 
 @Serializable
 data class TravelUpdate(val playerId: String, val destination: String) : WSFrame

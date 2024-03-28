@@ -7,11 +7,13 @@ import components.SineGraph
 import components.sineGraph
 import components.slider
 import el
+import frames.ShieldsUpdate
 import kotlinx.html.*
 import kotlinx.html.js.div
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
 import replaceElement
+import wsSend
 
 private val graphs = mutableMapOf<Direction, SineGraph>()
 
@@ -49,7 +51,6 @@ private fun TagConsumer<HTMLElement>.shieldSection(direction: Direction, offset:
     div("shield-section") {
         val directionName = direction.name.lowercase()
         id = "$directionName-shield-frequency-section"
-        //TODO - get from game state
 
         h3("shield-header") { +"${directionName.capitalize()} Shields" }
 
@@ -59,6 +60,8 @@ private fun TagConsumer<HTMLElement>.shieldSection(direction: Direction, offset:
                 p { +"Amplitude" }
                 slider("$directionName-amplitude", 0, 10, shield.amplitude, { 10 - it }, vertical = true) {
                     graph.amplitude = it
+                    GameState.shields[direction]!!.amplitude = it
+                    wsSend(ShieldsUpdate(GameState.shields))
                 }
             }
             graph = sineGraph("$directionName-shield-frequency", "shield-frequency-wrapper", shield.amplitude, shield.frequency, offset)
@@ -67,6 +70,8 @@ private fun TagConsumer<HTMLElement>.shieldSection(direction: Direction, offset:
             p { +"Frequency" }
             slider("$directionName-frequency", 1, 5, shield.frequency) {
                 graph.frequency = it
+                GameState.shields[direction]!!.frequency = it
+                wsSend(ShieldsUpdate(GameState.shields))
             }
         }
     }

@@ -13,9 +13,6 @@ suspend fun onWebsocketConnect(connection: Connection){
         GameState.rooms["Bridge"]?.players?.add(connection.playerId)
         GameState.shipName = "Star Eagle"
         connection.send(ReadyRoomUpdate(GameState.players))
-        sendAll(GameStart(shipName, GameState.players, GameState.rooms))
-
-        //TODO actual power management
-        ShipSystem.entries.forEach { GameState.power[it] = 10 }
+        sendAll(GameStart(shipName, GameState.players, GameState.rooms, GameState.power))
     }
 }

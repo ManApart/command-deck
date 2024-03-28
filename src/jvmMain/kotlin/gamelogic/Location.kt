@@ -24,13 +24,16 @@ suspend fun Scan.receive(connection: Connection) {
 }
 
 suspend fun shipTravel() {
+    val previousPosition = GameState.position.copy()
     if (GameState.warpEngaged) {
         shipTravel(ShipSystem.WARP_CORE, 10)
     } else {
         shipTravel(ShipSystem.THRUSTERS)
     }
 
-    sendAll(ShipPositionUpdate(GameState.position))
+    if (GameState.position != previousPosition) {
+        sendAll(ShipPositionUpdate(GameState.position))
+    }
 }
 
 private fun shipTravel(powerType: ShipSystem, velocityMultiplier: Int = 1) {

@@ -1,6 +1,7 @@
 package gamelogic
 
 import Connection
+import GameState
 import Player
 import connections
 import frames.GameStart
@@ -30,6 +31,6 @@ suspend fun GameStart.receive(connection: Connection) {
         connection.send(MessageUpdate("Not all players are ready!", true))
     } else {
         GameState.shipName = shipName
-        sendAll(GameStart(shipName, GameState.players, GameState.rooms))
+        sendAll(GameStart(shipName, GameState.players, GameState.rooms, GameState.power))
     }
 }

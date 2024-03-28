@@ -9,11 +9,13 @@ suspend fun WSFrame.parse(connection: Connection) {
         is Promotion -> receive()
         is GameStart -> receive(connection)
         is MessageUpdate -> receive(connection)
+        is PowerUpdate -> receive()
         is RepairUpdate -> receive()
         is RoomUpdate -> receive()
         is HelmUpdate -> receive()
         is TravelUpdate -> receive(connection)
         is Scan -> receive(connection)
+        is ShieldsUpdate -> receive(connection)
         is UserLogin -> receive(connection)
         else -> {
             println("Did not recognize $this")

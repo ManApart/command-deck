@@ -3,6 +3,7 @@ package views
 import el
 import CrewRole
 import GameState
+import GameState.currentView
 import components.toggle
 import frames.GameStart
 import frames.ReadyRoomUpdate
@@ -74,7 +75,7 @@ fun readyRoomView() {
             }
             div {
                 span { +"Ready Up" }
-                toggle("ready-up-input"){
+                toggle("ready-up-input") {
                     if (it) updateRole()
                 }
             }
@@ -96,7 +97,7 @@ fun readyRoomView() {
                         onClickFunction = { startGame() }
                     }
                     span { +"Drop unready Players: " }
-                    toggle("force-start"){}
+                    toggle("force-start") {}
                 }
             }
         }
@@ -124,46 +125,48 @@ private fun startGame() {
     if (shipName.isBlank()) {
         window.alert("Your ship must be named before disembark")
     } else {
-        wsSend(GameStart(shipName, mapOf(), mapOf(), forceStart))
+        wsSend(GameStart(shipName, mapOf(), mapOf(), mapOf(), forceStart))
     }
 }
 
 fun updatedReadyRoom(update: ReadyRoomUpdate) {
-    val updatedPlayer = update.crew[playerState.id]
-    if (updatedPlayer != null) {
-        if (playerState.role != updatedPlayer.role) {
-            playerState.role = updatedPlayer.role
-            unReady()
+    if (currentView == View.READY_ROOM) {
+        val updatedPlayer = update.crew[playerState.id]
+        if (updatedPlayer != null) {
+            if (playerState.role != updatedPlayer.role) {
+                playerState.role = updatedPlayer.role
+                unReady()
+            }
         }
-    }
 
-    val buttons = CrewRole.entries.associateWith { el<HTMLButtonElement>("select-${it.name}") }
+        val buttons = CrewRole.entries.associateWith { el<HTMLButtonElement>("select-${it.name}") }
 
-    buttons.entries.forEach { (role, button) ->
-        button.apply {
-            removeClass("confirmed")
-            removeClass("selected")
-            removeClass("unavailable")
-            disabled = false
-            innerText = role.cleanName()
+        buttons.entries.forEach { (role, button) ->
+            button.apply {
+                removeClass("confirmed")
+                removeClass("selected")
+                removeClass("unavailable")
+                disabled = false
+                innerText = role.cleanName()
+            }
         }
-    }
 
-    update.crew.values.forEach { player ->
-        val button = el<HTMLButtonElement>("select-${player.role.name}")
-        button.innerText = "${player.role.cleanName()}: ${player.name}"
-        if (playerState.id != player.id) {
-            button.addClass("unavailable")
-            button.disabled = true
+        update.crew.values.forEach { player ->
+            val button = el<HTMLButtonElement>("select-${player.role.name}")
+            button.innerText = "${player.role.cleanName()}: ${player.name}"
+            if (playerState.id != player.id) {
+                button.addClass("unavailable")
+                button.disabled = true
+            } else {
+                button.addClass("confirmed")
+            }
+        }
+
+        if (playerState.role != CrewRole.CAPTAIN) {
+            el<HTMLButtonElement>("captain-options").addClass("hidden")
         } else {
-            button.addClass("confirmed")
+            el<HTMLButtonElement>("captain-options").removeClass("hidden")
         }
-    }
-
-    if (playerState.role != CrewRole.CAPTAIN) {
-        el<HTMLButtonElement>("captain-options").addClass("hidden")
-    } else {
-        el<HTMLButtonElement>("captain-options").removeClass("hidden")
     }
 
 }

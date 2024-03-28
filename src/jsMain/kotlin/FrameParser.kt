@@ -40,11 +40,13 @@ private fun MessageUpdate.receive() {
 
 private fun ServerInfoUpdate.receive() {
     playerState.id = playerId
-    el<HTMLElement>("ip-display").innerText = url
-    replaceElement("qr-code-wrapper") {
-        div {
-            unsafe {
-                +"""<qr-code id="qr-code" contents="$url"></qr-code>"""
+    if (currentView == View.READY_ROOM) {
+        el<HTMLElement>("ip-display").innerText = url
+        replaceElement("qr-code-wrapper") {
+            div {
+                unsafe {
+                    +"""<qr-code id="qr-code" contents="$url"></qr-code>"""
+                }
             }
         }
     }
@@ -54,18 +56,20 @@ private fun GameStart.receive() {
     GameState.shipName = shipName
     GameState.rooms = rooms
     GameState.players = players
+    GameState.power = power
     if (playerState.role == CrewRole.STORY_TELLER) {
         manageRoomsView()
     } else turboLiftView()
 }
 
 private fun DatabaseTopics.receive() {
-    if (currentView == View.SCIENCE){
+    if (currentView == View.SCIENCE) {
         updateTopics(topics)
     }
 }
+
 private fun DatabaseSearchResult.receive() {
-    if (currentView == View.SCIENCE){
+    if (currentView == View.SCIENCE) {
         searchResults(topic)
     }
 }
@@ -110,28 +114,29 @@ private fun CaptainFocus.receive() {
 
     if (currentView == View.CREW) crewView()
 
-    if (playerState.focused != wasFocused){
+    if (playerState.focused != wasFocused) {
         //TODO - update crew views
     }
 }
 
 private fun ShipPositionUpdate.receive() {
     GameState.shipPosition = position
-    if (currentView == View.HELM){
+    if (currentView == View.HELM) {
         positionUpdate()
     }
 }
 
 private fun PowerUpdate.receive() {
     GameState.power = power
-    when (currentView){
+    when (currentView) {
         View.SHIELDS -> updateShields()
         else -> {}
     }
 }
+
 private fun ShieldsUpdate.receive() {
     GameState.shields = shields
-    when (currentView){
+    when (currentView) {
         View.SHIELDS -> updateShields()
         else -> {}
     }
