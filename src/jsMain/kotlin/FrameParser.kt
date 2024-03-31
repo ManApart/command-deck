@@ -56,7 +56,7 @@ private fun GameStart.receive() {
     GameState.shipName = shipName
     GameState.rooms = rooms
     GameState.players = players
-    GameState.power = power
+    GameState.power = power.toMutableMap()
     if (playerState.role == CrewRole.STORY_TELLER) {
         manageRoomsView()
     } else turboLiftView()
@@ -127,7 +127,7 @@ private fun ShipPositionUpdate.receive() {
 }
 
 private fun PowerUpdate.receive() {
-    GameState.power = power
+    GameState.power = power.toMutableMap()
     when (currentView) {
         View.SHIELDS -> updateShields()
         else -> {}
