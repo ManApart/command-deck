@@ -4,7 +4,9 @@ object GameState {
     var shipName = "Prometheus"
     var players = mapOf<String, Player>()
     var rooms = mapOf<String, Room>()
-    var power = mapOf<ShipSystem, Int>()
+    //TODO - update to match server gamestate
+    val totalPower = 40
+    var power = mutableMapOf<ShipSystem, Int>()
     var currentView = View.TURBO_LIFT
     var shipPosition = ShipPosition()
     var shields = mapOf<Direction, Shield>()
@@ -13,6 +15,8 @@ object GameState {
         rooms = initialRooms().associateBy { it.name }
         shields = initialShields()
         initializeTestingData()
+        val perSystem = totalPower / ShipSystem.entries.size
+        ShipSystem.entries.forEach { power[it] = perSystem }
     }
 
     fun updateRooms(playerId: String, destination: String) {
@@ -25,6 +29,7 @@ object GameState {
 enum class View {
     CREW,
     COMMS,
+    ENGINEERING,
     HELM,
     MED_BAY,
     WEAPONS,

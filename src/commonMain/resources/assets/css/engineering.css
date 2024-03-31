@@ -1,0 +1,33 @@
+.system-power-row{
+    margin-bottom: 20px;
+}
+
+.system-power-icon{
+    width: 40px;
+    display: inline-block;
+}
+
+.system-power-pip-wrapper{
+    display: inline-block;
+}
+
+.power-pip{
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    background-color: var(--background);
+    border: 1px solid black;
+}
+
+.powered-pip{
+    background-color: var(--action);
+}
+
+.base-pip{
+    background-color: var(--dark-background);
+}
+
+
+
+.system-power-name{
+}

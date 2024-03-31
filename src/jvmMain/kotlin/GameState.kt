@@ -2,7 +2,7 @@ object GameState {
     var shipName = "Prometheus"
     val players = mutableMapOf<String, Player>()
     val rooms = mutableMapOf<String, Room>()
-    val totalPower = 40
+    var totalPower = 40
     val power = mutableMapOf<ShipSystem, Int>()
     var shields = mapOf<Direction, Shield>()
     var position = ShipPosition()

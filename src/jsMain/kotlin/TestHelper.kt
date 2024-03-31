@@ -5,14 +5,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import views.helmView
-import views.readyRoomView
-import views.scienceView
-import views.shieldsView
+import views.*
 
 const val testing = true
 
-fun testView() = shieldsView()
+fun testView() = engineeringView()
 
 private val testInputFrames: List<WSFrame> = listOf(
 //    MessageUpdate("Test scan message"),
@@ -27,7 +24,7 @@ fun initializeTestingData() {
         with(playerState) {
             id = "0"
             name = "Kirk"
-            role = CrewRole.SCIENCE
+            role = CrewRole.ENGINEERING
             rooms["Bridge"]?.players?.add("0")
             rooms["Bridge"]?.players?.add("1")
 
