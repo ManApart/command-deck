@@ -1,5 +1,5 @@
 import GameState.currentView
-import GameState.power
+import GameState.players
 import frames.*
 import kotlinx.browser.window
 import kotlinx.html.div
@@ -77,7 +77,9 @@ private fun DatabaseSearchResult.receive() {
 private fun TravelUpdate.receive() {
     GameState.updateRooms(playerId, destination)
     val room = GameState.rooms[destination]
+    val iWasTraveler = playerId == playerState.id
     when {
+        currentView == View.TURBO_LIFT && iWasTraveler -> roomView()
         currentView == View.TURBO_LIFT -> arrive()
         currentView == View.ROOM_MANAGER -> roomManagerTravelUpdate()
         room != null && currentView == View.ROOM && room.players.contains(playerState.id) -> roomUpdate(room)
