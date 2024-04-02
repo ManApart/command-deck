@@ -76,10 +76,11 @@ private fun DatabaseSearchResult.receive() {
 
 private fun TravelUpdate.receive() {
     GameState.updateRooms(playerId, destination)
-    if (currentView == View.TURBO_LIFT) {
-        arrive()
-    } else if (currentView == View.ROOM_MANAGER) {
-        roomManagerTravelUpdate()
+    val room = GameState.rooms[destination]
+    when {
+        currentView == View.TURBO_LIFT -> arrive()
+        currentView == View.ROOM_MANAGER -> roomManagerTravelUpdate()
+        room != null && currentView == View.ROOM && room.players.contains(playerState.id) -> roomUpdate(room)
     }
 }
 

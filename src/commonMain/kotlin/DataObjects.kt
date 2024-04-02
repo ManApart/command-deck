@@ -3,17 +3,19 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Player(val id: String, var name: String, var role: CrewRole = CrewRole.CREWMAN, var focused: Boolean = false)
 
-enum class ShipSystem(val iconName: String) {
-    BRIDGE("captain"),
+enum class ShipSystem(val iconName: String, val powered: Boolean = true) {
+    BRIDGE("captain", false),
     SENSORS("comms"),
     WARP_CORE("helm"),
     THRUSTERS("helm"),
     MED_BAY("medical"),
     WEAPONS("security"),
     SHIELDS("science"),
-    ENGINES("engineering"),
-    NONE("none"),
+    ENGINES("engineering", false),
+    NONE("none", false),
 }
+
+fun poweredSystems() = ShipSystem.entries.filter { it.powered }
 
 enum class Hazard { BREACH, FIRE, NONE }
 

@@ -110,8 +110,6 @@ fun roomView() {
     }
 }
 
-//TODO - travel update should update crew
-
 fun roomUpdate(room: Room) {
     if (elExists("room-health")) {
         el("room-health-text").innerText = "Structural Integrity: ${room.health}/100"

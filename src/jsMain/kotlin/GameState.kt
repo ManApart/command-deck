@@ -15,8 +15,8 @@ object GameState {
         rooms = initialRooms().associateBy { it.name }
         shields = initialShields()
         initializeTestingData()
-        val perSystem = totalPower / ShipSystem.entries.size
-        ShipSystem.entries.forEach { power[it] = perSystem }
+        val perSystem = totalPower / poweredSystems().size
+        poweredSystems().forEach { power[it] = perSystem }
     }
 
     fun updateRooms(playerId: String, destination: String) {

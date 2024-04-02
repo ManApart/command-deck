@@ -19,8 +19,16 @@
     border: 1px solid black;
 }
 
-.powered-pip{
+.powered-pip-low{
     background-color: var(--action);
+}
+
+.powered-pip-med{
+    background-color: var(--highlight);
+}
+
+.powered-pip-high{
+    background-color: var(--bright);
 }
 
 .base-pip{

@@ -27,14 +27,14 @@ fun engineeringView() {
             div("engineering") {
                 div {
                     id = "power-distribution"
-                    val availablePower = totalPower - GameState.power.values.sum()
+                    val availablePower = totalPower - power.values.sum()
 
                     p {
                         id = "current-power-display"
                         +"Power: $availablePower/$totalPower"
                     }
 
-                    GameState.power.forEach { (system, powerLevel) ->
+                    power.forEach { (system, powerLevel) ->
                         div("system-power-row") {
                             id = "system-power-${system.name}"
 
@@ -46,11 +46,7 @@ fun engineeringView() {
 
                             div("system-power-pip-wrapper") {
                                 (0..systemLimit).forEach { i ->
-                                    val poweredClass = when {
-                                        i == 0 -> "base-pip"
-                                        i <= powerLevel -> "powered-pip"
-                                        else -> ""
-                                    }
+                                    val poweredClass = pipPowerClass(i, powerLevel)
 
                                     div("power-pip $poweredClass") {
                                         id = "${system.name}-power-pip-$i"
@@ -70,14 +66,26 @@ fun engineeringView() {
     }
 }
 
+private fun pipPowerClass(i: Int, powerLevel: Int): String {
+    return when {
+        i == 0 -> "base-pip"
+        i > powerLevel -> ""
+        i > 8 -> "powered-pip-high"
+        i > 5 -> "powered-pip-med"
+        else -> "powered-pip-low"
+    }
+}
+
 fun setPower(system: ShipSystem, level: Int){
-    println("setting power")
     (1..(Config.maxPowerPerSystem[system]?: 0)).forEach { i ->
         val pip = el("${system.name}-power-pip-$i")
+        val poweredClass = pipPowerClass(i, level)
         if (i <= level){
-            pip.addClass("powered-pip")
+            pip.addClass(poweredClass)
         } else {
-            pip.removeClass("powered-pip")
+            pip.removeClass("powered-pip-low")
+            pip.removeClass("powered-pip-medium")
+            pip.removeClass("powered-pip-high")
         }
     }
     power[system] = level

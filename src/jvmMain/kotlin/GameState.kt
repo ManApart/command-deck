@@ -14,8 +14,8 @@ object GameState {
         rooms.clear()
         shields = initialShields()
         initialRooms().forEach { rooms[it.name] = it }
-        val perSystem = totalPower / ShipSystem.entries.size
-        ShipSystem.entries.forEach { power[it] = perSystem }
+        val perSystem = totalPower / poweredSystems().size
+        poweredSystems().forEach { power[it] = perSystem }
     }
 
     fun roleOccupied(role: CrewRole) = players.values.any { it.role == role }
