@@ -63,7 +63,7 @@ data class DatabaseSearchResult(val topic: Topic) : WSFrame
 data class DatabaseTopics(val topics: List<String>) : WSFrame
 
 @Serializable
-data class PowerUpdate(val power: Map<ShipSystem, Int>) : WSFrame
+data class PowerUpdate(val totalPower: Int, val power: Map<ShipSystem, Int>) : WSFrame
 
 @Serializable
 data class ShieldsUpdate(val shields: Map<Direction, Shield>) : WSFrame

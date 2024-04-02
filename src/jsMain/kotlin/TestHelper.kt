@@ -15,7 +15,7 @@ private val testInputFrames: List<WSFrame> = listOf(
 //    MessageUpdate("Test scan message"),
 //    DatabaseSearchResult(Topic("Test", "This is a test topic.\nHere is a second paragraph"))
 //    ReadyRoomUpdate(players),
-//    PowerUpdate(mapOf(ShipSystem.SHIELDS to 10)),
+//    PowerUpdate(41, mapOf(ShipSystem.SHIELDS to 10)),
 //    ShieldsUpdate(Direction.entries.associateWith { Shield(3,2) })
 )
 

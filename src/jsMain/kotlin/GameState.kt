@@ -4,8 +4,7 @@ object GameState {
     var shipName = "Prometheus"
     var players = mapOf<String, Player>()
     var rooms = mapOf<String, Room>()
-    //TODO - update to match server gamestate
-    val totalPower = 40
+    var totalPower = 40
     var power = mutableMapOf<ShipSystem, Int>()
     var currentView = View.TURBO_LIFT
     var shipPosition = ShipPosition()

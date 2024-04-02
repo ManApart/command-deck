@@ -15,11 +15,12 @@ import kotlinx.html.js.div
 import kotlinx.html.js.img
 import kotlinx.html.js.onClickFunction
 import playerState
+import poweredSystems
 import replaceElement
 import wsSend
 
 fun engineeringView() {
-    GameState.currentView = View.CREW
+    GameState.currentView = View.ENGINEERING
     replaceElement {
         nav()
         div {
@@ -77,17 +78,31 @@ private fun pipPowerClass(i: Int, powerLevel: Int): String {
 }
 
 fun setPower(system: ShipSystem, level: Int){
-    (1..(Config.maxPowerPerSystem[system]?: 0)).forEach { i ->
+    updatePips(system, level)
+    power[system] = level
+    wsSend(PowerUpdate(totalPower, power))
+}
+
+private fun updatePips(system: ShipSystem, level: Int) {
+    (1..(Config.maxPowerPerSystem[system] ?: 0)).forEach { i ->
         val pip = el("${system.name}-power-pip-$i")
         val poweredClass = pipPowerClass(i, level)
-        if (i <= level){
+        if (i <= level) {
             pip.addClass(poweredClass)
         } else {
             pip.removeClass("powered-pip-low")
-            pip.removeClass("powered-pip-medium")
+            pip.removeClass("powered-pip-med")
             pip.removeClass("powered-pip-high")
         }
     }
-    power[system] = level
-    wsSend(PowerUpdate(power))
+}
+
+fun updatePower(){
+    println("Updating power")
+    val availablePower = totalPower - power.values.sum()
+    el("current-power-display").innerText = "Power: $availablePower/$totalPower"
+
+    poweredSystems().associateWith { power[it] ?: 0 }.forEach { (system, level) ->
+        updatePips(system, level)
+    }
 }

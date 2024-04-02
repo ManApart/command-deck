@@ -13,5 +13,5 @@ suspend fun PowerUpdate.receive() {
         GameState.power[system] = applied
         powerLeft = max(0, powerLeft-applied)
     }
-    sendAll(PowerUpdate(GameState.power))
+    sendAll(PowerUpdate(GameState.totalPower, GameState.power))
 }

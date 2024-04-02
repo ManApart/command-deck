@@ -128,9 +128,12 @@ private fun ShipPositionUpdate.receive() {
 }
 
 private fun PowerUpdate.receive() {
+    GameState.totalPower = totalPower
     GameState.power = power.toMutableMap()
+    println("Receive power $currentView")
     when (currentView) {
         View.SHIELDS -> updateShields()
+        View.ENGINEERING -> updatePower()
         else -> {}
     }
 }
