@@ -14,12 +14,17 @@ fun TagConsumer<HTMLElement>.nav() {
         id = "nav"
         when (playerState.role) {
             CrewRole.CAPTAIN -> navButton("Crew", View.CREW) { crewView() }
-            CrewRole.ENGINEERING -> navButton("Engineering", View.ENGINEERING) { engineeringView() }
+            CrewRole.ENGINEERING -> {
+                navButton("Engineering", View.ENGINEERING) { engineeringView() }
+                navButton("Damage Control", View.DAMAGE_CONTROL) { damageControlView() }
+            }
+
             CrewRole.HELM -> navButton("Helm", View.HELM) { helmView() }
-            CrewRole.SCIENCE ->{
+            CrewRole.SCIENCE -> {
                 navButton("Science", View.SCIENCE) { scienceView() }
                 navButton("Shields", View.SHIELDS) { shieldsView() }
             }
+
             CrewRole.STORY_TELLER -> storyTellerViews()
             else -> {}
         }

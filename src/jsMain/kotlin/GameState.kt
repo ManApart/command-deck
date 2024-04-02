@@ -28,6 +28,7 @@ object GameState {
 enum class View {
     CREW,
     COMMS,
+    DAMAGE_CONTROL,
     ENGINEERING,
     HELM,
     MED_BAY,

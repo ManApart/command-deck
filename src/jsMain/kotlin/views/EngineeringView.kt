@@ -25,6 +25,7 @@ fun engineeringView() {
         nav()
         div {
             h1 { +"Engineering" }
+            crewmanTitle()
             div("engineering") {
                 div {
                     id = "power-distribution"

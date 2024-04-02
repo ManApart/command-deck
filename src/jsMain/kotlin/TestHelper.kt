@@ -9,7 +9,7 @@ import views.*
 
 const val testing = true
 
-fun testView() = engineeringView()
+fun testView() = damageControlView()
 
 private val testInputFrames: List<WSFrame> = listOf(
 //    MessageUpdate("Test scan message"),
