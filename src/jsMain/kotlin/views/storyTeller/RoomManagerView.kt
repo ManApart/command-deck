@@ -14,7 +14,7 @@ import views.nav
 import wsSend
 
 fun manageRoomsView() {
-    GameState.currentView = View.ROOM_MANAGER
+    GameState.setCurrent(View.ROOM_MANAGER)
     replaceElement {
         nav()
         div {

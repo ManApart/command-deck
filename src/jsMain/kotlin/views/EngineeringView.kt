@@ -19,8 +19,10 @@ import poweredSystems
 import replaceElement
 import wsSend
 
+fun engineeringShake() = power.map { (system, _) -> "system-power-${system.name}" }
+
 fun engineeringView() {
-    GameState.currentView = View.ENGINEERING
+    GameState.setCurrent(View.ENGINEERING)
     replaceElement {
         nav()
         div {

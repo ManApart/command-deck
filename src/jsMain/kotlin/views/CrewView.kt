@@ -14,7 +14,7 @@ import replaceElement
 import wsSend
 
 fun crewView() {
-    GameState.currentView = View.CREW
+    GameState.setCurrent(View.CREW)
     replaceElement {
         nav()
         div {

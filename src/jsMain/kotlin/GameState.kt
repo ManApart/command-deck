@@ -1,4 +1,8 @@
+import kotlin.random.Random
+
 val playerState = PlayerState()
+val random = Random(0)
+
 
 object GameState {
     var shipName = "Prometheus"
@@ -7,6 +11,7 @@ object GameState {
     var totalPower = 40
     var power = mutableMapOf<ShipSystem, Int>()
     var currentView = View.TURBO_LIFT
+        private set
     var shipPosition = ShipPosition()
     var shields = mapOf<Direction, Shield>()
 
@@ -23,20 +28,17 @@ object GameState {
         rooms[destination]?.players?.add(playerId)
     }
 
-}
+    fun currentRoom(): Room {
+        return rooms.values.firstOrNull { it.players.contains(playerState.id) } ?: rooms.values.first()
+    }
 
-enum class View {
-    CREW,
-    COMMS,
-    DAMAGE_CONTROL,
-    ENGINEERING,
-    HELM,
-    MED_BAY,
-    WEAPONS,
-    SCIENCE,
-    SHIELDS,
-    READY_ROOM,
-    ROOM,
-    ROOM_MANAGER,
-    TURBO_LIFT,
+    fun systemRoom(system: ShipSystem): Room? {
+        return rooms.values.firstOrNull { it.system == system }
+    }
+
+    fun setCurrent(view: View) {
+        currentView = view
+        view.updateHealthFX()
+    }
+
 }

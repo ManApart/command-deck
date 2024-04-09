@@ -16,7 +16,7 @@ import replaceElement
 import wsSend
 
 fun roomView() {
-    GameState.currentView = View.ROOM
+    GameState.setCurrent(View.ROOM)
     val room = GameState.rooms.values.firstOrNull { it.players.contains(playerState.id) }!!
     replaceElement {
         nav()

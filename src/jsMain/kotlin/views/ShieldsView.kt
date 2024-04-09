@@ -19,7 +19,7 @@ private val graphs = mutableMapOf<Direction, SineGraph>()
 
 //Use amplitude for power
 fun shieldsView() {
-    GameState.currentView = View.SHIELDS
+    GameState.setCurrent(View.SHIELDS)
     replaceElement {
         nav()
         div {

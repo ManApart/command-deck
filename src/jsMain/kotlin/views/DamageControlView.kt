@@ -1,18 +1,13 @@
 package views
 
-import GameState.power
-import GameState.totalPower
-import frames.RepairUpdate
+import GameState
+import View
 import kotlinx.html.*
 import kotlinx.html.js.div
-import kotlinx.html.js.img
-import kotlinx.html.js.onClickFunction
-import playerState
 import replaceElement
-import wsSend
 
 fun damageControlView() {
-    GameState.currentView = View.DAMAGE_CONTROL
+    GameState.setCurrent(View.DAMAGE_CONTROL)
     replaceElement {
         nav()
         div {

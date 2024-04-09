@@ -16,7 +16,7 @@ import replaceElement
 import wsSend
 
 fun scienceView() {
-    GameState.currentView = View.SCIENCE
+    GameState.setCurrent(View.SCIENCE)
     replaceElement {
         nav()
         div {

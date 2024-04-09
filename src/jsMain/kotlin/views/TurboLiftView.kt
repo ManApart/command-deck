@@ -23,7 +23,7 @@ import replaceElement
 import wsSend
 
 fun turboLiftView() {
-    GameState.currentView = View.TURBO_LIFT
+    GameState.setCurrent(View.TURBO_LIFT)
     replaceElement {
         nav()
         div {

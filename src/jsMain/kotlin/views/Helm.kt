@@ -23,7 +23,7 @@ private const val squareSize = 40
 private const val sectorWidth = Config.sectorDivisor * squareSize
 
 fun helmView() {
-    GameState.currentView = View.HELM
+    GameState.setCurrent(View.HELM)
     replaceElement {
         nav()
         div {

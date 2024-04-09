@@ -89,6 +89,10 @@ private fun TravelUpdate.receive() {
 private fun RoomUpdate.receive() {
     val room = GameState.rooms[roomId]
     if (room != null) {
+        println("$health, ${room.health}")
+        val healthChange = health - room.health
+        val breachChange = breach - room.breach
+        val fireChange = fire - room.fire
         room.health = health
         room.breach = breach
         room.fire = fire
@@ -97,6 +101,7 @@ private fun RoomUpdate.receive() {
         } else if (currentView == View.ROOM_MANAGER) {
             roomManagerRoomUpdate(room)
         }
+        currentView.updateHealthFX(healthChange, breachChange, fireChange)
     }
 }
 

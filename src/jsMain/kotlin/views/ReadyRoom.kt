@@ -22,7 +22,7 @@ import replaceElement
 import wsSend
 
 fun readyRoomView() {
-    GameState.currentView = View.READY_ROOM
+    GameState.setCurrent(View.READY_ROOM)
     replaceElement {
         div {
             h1 { +"Welcome to Command Deck" }
