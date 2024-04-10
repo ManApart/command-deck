@@ -26,7 +26,7 @@ fun engineeringView() {
     replaceElement {
         nav()
         div {
-            h1 { +"Engineering" }
+            viewTitle("Engineering")
             crewmanTitle()
             div("engineering") {
                 div {

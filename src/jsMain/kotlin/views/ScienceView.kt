@@ -15,14 +15,14 @@ import org.w3c.dom.events.KeyboardEvent
 import replaceElement
 import wsSend
 
+fun scienceShake() = listOf("science-scan", "science-database")
+
 fun scienceView() {
     GameState.setCurrent(View.SCIENCE)
     replaceElement {
         nav()
         div {
-            h1 {
-                +"Science"
-            }
+            viewTitle("Science")
             crewmanTitle()
             div {
                 id = "science-scan"

@@ -13,15 +13,18 @@ import playerState
 import replaceElement
 import wsSend
 
+fun crewShake() = players.values.map { "player-${it.id}" }
+
 fun crewView() {
     GameState.setCurrent(View.CREW)
     replaceElement {
         nav()
         div {
-            h1 { +"Crew" }
+            viewTitle("Crew")
             div("crew") {
                 players.values.filter { it.id != playerState.id }.forEach { player ->
                     div("crew-row") {
+                        id = "player-${player.id}"
                         val focusedClass = if(player.focused) "selected" else ""
                         div("crew-role-select crew-block $focusedClass") {
                             id = "select-${player.role.name}"

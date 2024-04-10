@@ -58,3 +58,10 @@ fun TagConsumer<HTMLElement>.crewmanTitle() {
         +"${playerState.role.title} ${playerState.name}"
     }
 }
+
+fun TagConsumer<HTMLElement>.viewTitle(title: String) {
+    h1 {
+        id = "view-title"
+        +title
+    }
+}

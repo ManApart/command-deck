@@ -15,6 +15,12 @@ import playerState
 import replaceElement
 import wsSend
 
+fun roomShake() : List<String>{
+    val room = GameState.rooms.values.firstOrNull { it.players.contains(playerState.id) } ?: return emptyList()
+    return room.players.map { "player-$it" } + listOf("room-${room.name}")
+
+}
+
 fun roomView() {
     GameState.setCurrent(View.ROOM)
     val room = GameState.rooms.values.firstOrNull { it.players.contains(playerState.id) }!!
@@ -26,6 +32,7 @@ fun roomView() {
             }
             h1 {
                 style ="display: inline-block;"
+                id = "view-title"
                 +room.name
             }
             crewmanTitle()
@@ -39,7 +46,7 @@ fun roomView() {
                     }
                     room.players.mapNotNull { players[it] }.forEach { player ->
                         div(classes = "crew-role-select") {
-                            id = "select-${player.role.name}"
+                            id = "player-${player.id}"
                             style = "background-color: ${player.role.color};"
                             img(classes = "role-select-img") {
                                 src = "assets/icons/${player.role.name.lowercase()}.svg"

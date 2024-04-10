@@ -22,12 +22,14 @@ import playerState
 import replaceElement
 import wsSend
 
+fun turboLiftShake() = GameState.rooms.values.map { "room-${it.name}" }
+
 fun turboLiftView() {
     GameState.setCurrent(View.TURBO_LIFT)
     replaceElement {
         nav()
         div {
-            h1 { +"The ${GameState.shipName}" }
+            viewTitle("The ${GameState.shipName}")
             crewmanTitle()
             div {
                 id = "rooms"

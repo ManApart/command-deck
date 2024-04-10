@@ -9,7 +9,7 @@ import views.*
 
 const val testing = true
 
-fun testView() = engineeringView()
+fun testView() = turboLiftView()
 
 private val testInputFrames: List<WSFrame> = listOf(
 //    MessageUpdate("Test scan message"),
@@ -32,7 +32,7 @@ fun initializeTestingData() {
             players = mapOf(
                 id to Player(id, name, role),
                 "1" to Player("1", "Spock", CrewRole.SCIENCE, true),
-                "2" to Player("1", "Checkov", CrewRole.CREWMAN),
+                "2" to Player("2", "Checkov", CrewRole.CREWMAN),
             )
         }
     }

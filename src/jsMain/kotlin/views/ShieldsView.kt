@@ -15,6 +15,8 @@ import org.w3c.dom.HTMLInputElement
 import replaceElement
 import wsSend
 
+fun shieldsShake() = listOf("shield-power-distribution") + Direction.entries.map { "${it.name.lowercase()}-shield-frequency-section" }
+
 private val graphs = mutableMapOf<Direction, SineGraph>()
 
 //Use amplitude for power
@@ -23,9 +25,7 @@ fun shieldsView() {
     replaceElement {
         nav()
         div {
-            h1 {
-                +"Shields"
-            }
+            viewTitle("Shields")
             crewmanTitle()
             div {
                 id = "shield-power-distribution"

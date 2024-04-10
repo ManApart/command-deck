@@ -22,6 +22,8 @@ private var warpEngaged = false
 private const val squareSize = 40
 private const val sectorWidth = Config.sectorDivisor * squareSize
 
+fun helmShake() = listOf("helm-readout", "helm-controls", "ship-position-display")
+
 fun helmView() {
     GameState.setCurrent(View.HELM)
     replaceElement {
