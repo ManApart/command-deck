@@ -20,6 +20,9 @@ fun TagConsumer<HTMLElement>.nav() {
             }
 
             CrewRole.HELM -> navButton("Helm", View.HELM) { helmView() }
+            CrewRole.MEDICAL -> {
+                navButton("Life Signs", View.LIFE_SIGNS) { lifeSignsView() }
+            }
             CrewRole.SCIENCE -> {
                 navButton("Science", View.SCIENCE) { scienceView() }
                 navButton("Shields", View.SHIELDS) { shieldsView() }
@@ -55,6 +58,7 @@ private fun TagConsumer<HTMLElement>.storyTellerViews() {
 fun TagConsumer<HTMLElement>.crewmanTitle() {
     p {
         id = "crewman-title"
+        style = "background-color: ${playerState.role.color};"
         +"${playerState.role.title} ${playerState.name}"
     }
 }

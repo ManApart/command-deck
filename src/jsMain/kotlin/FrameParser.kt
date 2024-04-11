@@ -81,6 +81,7 @@ private fun TravelUpdate.receive() {
     when {
         currentView == View.TURBO_LIFT && iWasTraveler -> roomView()
         currentView == View.TURBO_LIFT -> arrive()
+        currentView == View.LIFE_SIGNS -> lifeSignsView()
         currentView == View.ROOM_MANAGER -> roomManagerTravelUpdate()
         room != null && currentView == View.ROOM && room.players.contains(playerState.id) -> roomUpdate(room)
     }

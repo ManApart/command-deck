@@ -135,7 +135,10 @@ input[type=number] {
 }
 
 #crewman-title{
+    display: inline-block;
     margin-top: 0px;
+    padding: 5px;
+    padding-right: 15px;
 }
 
 #helm-controls{

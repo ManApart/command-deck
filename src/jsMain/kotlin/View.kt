@@ -6,6 +6,7 @@ enum class View(val system: ShipSystem, val getShakeables: () -> List<String> = 
     DAMAGE_CONTROL(ShipSystem.ENGINES, ::damageControlShake),
     ENGINEERING(ShipSystem.ENGINES, ::engineeringShake),
     HELM(ShipSystem.WARP_CORE, ::helmShake),
+    LIFE_SIGNS(ShipSystem.MED_BAY, ::lifeSignsShake),
     MED_BAY(ShipSystem.MED_BAY),
     WEAPONS(ShipSystem.WEAPONS),
     SCIENCE(ShipSystem.SENSORS, ::scienceShake),

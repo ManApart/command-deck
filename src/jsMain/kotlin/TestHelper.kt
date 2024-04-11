@@ -9,7 +9,7 @@ import views.*
 
 const val testing = true
 
-fun testView() = turboLiftView()
+fun testView() = lifeSignsView()
 
 private val testInputFrames: List<WSFrame> = listOf(
 //    MessageUpdate("Test scan message"),
@@ -17,7 +17,7 @@ private val testInputFrames: List<WSFrame> = listOf(
 //    ReadyRoomUpdate(players),
 //    PowerUpdate(41, mapOf(ShipSystem.SHIELDS to 10)),
 //    ShieldsUpdate(Direction.entries.associateWith { Shield(3,2) })
-    RoomUpdate("Bridge", 50)
+//    RoomUpdate("Bridge", 50)
 )
 
 fun initializeTestingData() {
@@ -25,7 +25,7 @@ fun initializeTestingData() {
         with(playerState) {
             id = "0"
             name = "Kirk"
-            role = CrewRole.ENGINEERING
+            role = CrewRole.MEDICAL
             rooms["Bridge"]?.players?.add("0")
             rooms["Bridge"]?.players?.add("1")
 
