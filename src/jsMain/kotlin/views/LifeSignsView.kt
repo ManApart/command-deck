@@ -3,18 +3,10 @@ package views
 import GameState
 import GameState.players
 import View
-import components.progressBar
-import el
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.dom.removeClass
 import kotlinx.html.*
 import kotlinx.html.js.div
-import kotlinx.html.js.img
-import kotlinx.html.js.onClickFunction
-import playerState
 import replaceElement
+import sparks
 
 fun lifeSignsShake() = GameState.rooms.values.map { "room-${it.name}" }
 
@@ -22,6 +14,7 @@ fun lifeSignsView() {
     GameState.setCurrent(View.LIFE_SIGNS)
     replaceElement {
         nav()
+        sparks()
         div {
             viewTitle("The ${GameState.shipName}")
             crewmanTitle()

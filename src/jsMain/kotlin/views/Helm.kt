@@ -14,6 +14,7 @@ import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onClickFunction
 import org.w3c.dom.HTMLInputElement
 import replaceElement
+import sparks
 import wsSend
 
 private var velocity = 0
@@ -28,6 +29,7 @@ fun helmView() {
     GameState.setCurrent(View.HELM)
     replaceElement {
         nav()
+        sparks()
         div {
             h1 {
                 id = "helm-readout"

@@ -17,6 +17,7 @@ import kotlinx.html.js.onClickFunction
 import playerState
 import poweredSystems
 import replaceElement
+import sparks
 import wsSend
 
 fun engineeringShake() = power.map { (system, _) -> "system-power-${system.name}" }
@@ -25,6 +26,7 @@ fun engineeringView() {
     GameState.setCurrent(View.ENGINEERING)
     replaceElement {
         nav()
+        sparks()
         div {
             viewTitle("Engineering")
             crewmanTitle()

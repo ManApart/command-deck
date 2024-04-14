@@ -13,6 +13,7 @@ import kotlinx.html.js.onKeyPressFunction
 import org.w3c.dom.*
 import org.w3c.dom.events.KeyboardEvent
 import replaceElement
+import sparks
 import wsSend
 
 fun scienceShake() = listOf("science-scan", "science-database")
@@ -21,6 +22,7 @@ fun scienceView() {
     GameState.setCurrent(View.SCIENCE)
     replaceElement {
         nav()
+        sparks()
         div {
             viewTitle("Science")
             crewmanTitle()

@@ -13,6 +13,7 @@ import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import playerState
 import replaceElement
+import sparks
 import wsSend
 
 fun roomShake() : List<String>{
@@ -26,6 +27,7 @@ fun roomView() {
     val room = GameState.rooms.values.firstOrNull { it.players.contains(playerState.id) }!!
     replaceElement {
         nav()
+        sparks()
         div {
             img(classes = "room-icon") {
                 src = "assets/icons/${room.system.iconName}.svg"

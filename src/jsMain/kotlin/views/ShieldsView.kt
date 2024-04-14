@@ -13,6 +13,7 @@ import kotlinx.html.js.div
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
 import replaceElement
+import sparks
 import wsSend
 
 fun shieldsShake() = listOf("shield-power-distribution") + Direction.entries.map { "${it.name.lowercase()}-shield-frequency-section" }
@@ -24,6 +25,7 @@ fun shieldsView() {
     GameState.setCurrent(View.SHIELDS)
     replaceElement {
         nav()
+        sparks()
         div {
             viewTitle("Shields")
             crewmanTitle()

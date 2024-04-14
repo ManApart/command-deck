@@ -20,6 +20,7 @@ import kotlinx.html.js.img
 import kotlinx.html.js.onClickFunction
 import playerState
 import replaceElement
+import sparks
 import wsSend
 
 fun turboLiftShake() = GameState.rooms.values.map { "room-${it.name}" }
@@ -28,6 +29,7 @@ fun turboLiftView() {
     GameState.setCurrent(View.TURBO_LIFT)
     replaceElement {
         nav()
+        sparks()
         div {
             viewTitle("The ${GameState.shipName}")
             crewmanTitle()

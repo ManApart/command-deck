@@ -17,7 +17,7 @@ private val testInputFrames: List<WSFrame> = listOf(
 //    ReadyRoomUpdate(players),
 //    PowerUpdate(41, mapOf(ShipSystem.SHIELDS to 10)),
 //    ShieldsUpdate(Direction.entries.associateWith { Shield(3,2) })
-//    RoomUpdate("Bridge", 50)
+    RoomUpdate("Bridge", 50)
 )
 
 fun initializeTestingData() {

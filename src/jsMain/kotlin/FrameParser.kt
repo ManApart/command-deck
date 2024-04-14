@@ -90,7 +90,6 @@ private fun TravelUpdate.receive() {
 private fun RoomUpdate.receive() {
     val room = GameState.rooms[roomId]
     if (room != null) {
-        println("$health, ${room.health}")
         val healthChange = health - room.health
         val breachChange = breach - room.breach
         val fireChange = fire - room.fire

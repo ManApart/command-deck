@@ -1,7 +1,8 @@
+import kotlin.js.Date
 import kotlin.random.Random
 
 val playerState = PlayerState()
-val random = Random(0)
+val random = Random(Date.now().toLong())
 
 
 object GameState {

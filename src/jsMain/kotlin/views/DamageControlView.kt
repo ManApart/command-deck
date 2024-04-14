@@ -5,6 +5,7 @@ import View
 import kotlinx.html.*
 import kotlinx.html.js.div
 import replaceElement
+import sparks
 
 fun damageControlShake() = GameState.rooms.values.map { "room-${it.name}" }
 
@@ -12,6 +13,7 @@ fun damageControlView() {
     GameState.setCurrent(View.DAMAGE_CONTROL)
     replaceElement {
         nav()
+        sparks()
         div {
             viewTitle("Damage Control")
             crewmanTitle()

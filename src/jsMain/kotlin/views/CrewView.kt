@@ -11,6 +11,7 @@ import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import playerState
 import replaceElement
+import sparks
 import wsSend
 
 fun crewShake() = players.values.map { "player-${it.id}" }
@@ -19,6 +20,7 @@ fun crewView() {
     GameState.setCurrent(View.CREW)
     replaceElement {
         nav()
+        sparks()
         div {
             viewTitle("Crew")
             div("crew") {
