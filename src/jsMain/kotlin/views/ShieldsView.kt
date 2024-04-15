@@ -47,7 +47,7 @@ fun shieldsView() {
     }
 }
 
-private fun TagConsumer<HTMLElement>.shieldSection(direction: Direction, offset: Int) {
+fun TagConsumer<HTMLElement>.shieldSection(direction: Direction, offset: Int) {
     lateinit var graph: SineGraph
     val shield = GameState.shields[direction]!!
     div("shield-section") {

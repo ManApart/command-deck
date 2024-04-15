@@ -1,0 +1,50 @@
+
+#helm-controls{
+    padding: 5px;
+    max-width: 500px;
+}
+
+.helm-slider-wrapper {
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.helm-table-row{
+}
+
+.helm-table-heading{
+    width: 38px;
+    height: 38px;
+    padding: 0px;
+    text-align: center;
+}
+
+.helm-table-col{
+    width: 38px;
+    height: 38px;
+    padding: 0px;
+    outline: 1px solid white;
+}
+
+#ship-position-display{
+    position: relative;
+    margin: 5px;
+    min-width: 500px;
+}
+#ship-indicator {
+    position: absolute;
+}
+
+#warp-button{
+    border: 1px solid white;
+    padding: 5px;
+    width: 150px;
+    margin: auto;
+}
+.warp-off {
+}
+.warp-on {
+    background-color: var(--action);
+}

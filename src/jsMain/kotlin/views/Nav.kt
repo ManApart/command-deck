@@ -23,10 +23,13 @@ fun TagConsumer<HTMLElement>.nav() {
             CrewRole.MEDICAL -> {
                 navButton("Life Signs", View.LIFE_SIGNS) { lifeSignsView() }
             }
+
             CrewRole.SCIENCE -> {
                 navButton("Science", View.SCIENCE) { scienceView() }
                 navButton("Shields", View.SHIELDS) { shieldsView() }
             }
+
+            CrewRole.SECURITY -> navButton("Weapons", View.WEAPONS) { weaponsView() }
 
             CrewRole.STORY_TELLER -> storyTellerViews()
             else -> {}
