@@ -2,6 +2,8 @@ package views
 
 import GameState
 import View
+import Wave
+import components.graphSection
 import el
 import kotlinx.html.*
 import kotlinx.html.js.div
@@ -74,7 +76,8 @@ private fun TagConsumer<HTMLElement>.weapons() {
     div {
         id = "weapons"
         h2 { +"Phasors" }
-        shieldSection(Direction.FORE, 0)
+        val phasor = Wave()
+        graphSection(phasor, "phasors", "Phasors", 0)
         h2 { +"Torpedoes" }
         p {
             id = "torpedo-display"

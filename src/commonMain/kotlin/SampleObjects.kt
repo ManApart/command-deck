@@ -9,4 +9,4 @@ fun initialRooms() = listOf(
     Room("Shield Generator", ShipSystem.SHIELDS),
 )
 
-fun initialShields() = Direction.entries.associateWith { Shield() }
+fun initialShields() = Direction.entries.associateWith { Wave() }

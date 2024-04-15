@@ -89,3 +89,36 @@ input[type=range][orient=vertical] {
   display: inline-block;
   font-size: 14px;
 }
+
+
+/*Wave Graph*/
+.graph-section{
+    max-width: 700px;
+}
+
+.graph-header{
+    text-align: center;
+}
+
+.graph-top-section{
+    display: block;
+}
+
+.graph-amplitude {
+    width: 20%;
+    display: inline-block;
+    text-align: center;
+}
+
+.graph-frequency-wrapper{
+    display: inline-block;
+    width: 80%;
+}
+
+.graph-frequency {
+    margin-left: 15%;
+    width: 80%;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+}

@@ -1,15 +1,16 @@
 package components
 
+import Wave
 import el
+import frames.ShieldsUpdate
 import kotlinx.browser.window
-import kotlinx.html.TagConsumer
-import kotlinx.html.canvas
-import kotlinx.html.div
-import kotlinx.html.id
+import kotlinx.html.*
+import kotlinx.html.js.div
 import onElementExists
 import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
 import org.w3c.dom.HTMLElement
+import wsSend
 import kotlin.math.PI
 import kotlin.math.sin
 
@@ -32,6 +33,38 @@ data class SineGraph(
 }
 
 data class GraphPoint(var a: Double, var x: Int, var c: String = "hsl(th, 75%, 55%)")
+
+
+fun TagConsumer<HTMLElement>.graphSection(wave: Wave, name: String, title: String, initialOffset: Int): SineGraph {
+    lateinit var graph: SineGraph
+    div("graph-section") {
+        id = "$name-graph-frequency-section"
+
+        h3("graph-header") { +title }
+
+        div("graph-top-section") {
+            //TODO - make analog and maybe make both sliders drag on canvas
+            div("graph-amplitude") {
+                p { +"Amplitude" }
+                slider("$name-amplitude", 0, 10, wave.amplitude, { 10 - it }, vertical = true) {
+                    graph.amplitude = it
+                    wave.amplitude = it
+                    wsSend(ShieldsUpdate(GameState.shields))
+                }
+            }
+            graph = sineGraph("$name-graph-frequency", "graph-frequency-wrapper", wave.amplitude, wave.frequency, initialOffset)
+        }
+        div("graph-frequency") {
+            p { +"Frequency" }
+            slider("$name-frequency", 1, 5, wave.frequency) {
+                graph.frequency = it
+                wave.frequency = it
+                wsSend(ShieldsUpdate(GameState.shields))
+            }
+        }
+    }
+    return graph
+}
 
 fun TagConsumer<HTMLElement>.sineGraph(id: String, wrapperClasses: String = "", amplitude: Int = 5, frequency: Int= 1, offset: Int = 1): SineGraph {
     div(wrapperClasses) {

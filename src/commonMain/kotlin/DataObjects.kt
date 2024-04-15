@@ -45,4 +45,4 @@ data class Topic(val name: String, val data: String)
 enum class Direction { FORE, AFT, PORT, STARBOARD }
 
 @Serializable
-data class Shield(var amplitude: Int = 0, var frequency: Int = 1)
+data class Wave(var amplitude: Int = 0, var frequency: Int = 1)

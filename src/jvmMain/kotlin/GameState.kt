@@ -4,7 +4,7 @@ object GameState {
     val rooms = mutableMapOf<String, Room>()
     var totalPower = 40
     val power = mutableMapOf<ShipSystem, Int>()
-    var shields = mapOf<Direction, Shield>()
+    var shields = mapOf<Direction, Wave>()
     var position = ShipPosition()
     var velocity = 0
     var warpEngaged = false

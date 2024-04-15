@@ -5,7 +5,7 @@ import Direction
 import Hazard
 import Player
 import Room
-import Shield
+import Wave
 import ShipPosition
 import ShipSystem
 import Topic
@@ -66,4 +66,4 @@ data class DatabaseTopics(val topics: List<String>) : WSFrame
 data class PowerUpdate(val totalPower: Int, val power: Map<ShipSystem, Int>) : WSFrame
 
 @Serializable
-data class ShieldsUpdate(val shields: Map<Direction, Shield>) : WSFrame
+data class ShieldsUpdate(val shields: Map<Direction, Wave>) : WSFrame

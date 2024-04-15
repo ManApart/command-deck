@@ -14,7 +14,7 @@ object GameState {
     var currentView = View.TURBO_LIFT
         private set
     var shipPosition = ShipPosition()
-    var shields = mapOf<Direction, Shield>()
+    var shields = mapOf<Direction, Wave>()
 
     init {
         rooms = initialRooms().associateBy { it.name }

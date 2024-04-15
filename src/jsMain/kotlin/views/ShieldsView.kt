@@ -4,6 +4,7 @@ import Direction
 import GameState
 import View
 import components.SineGraph
+import components.graphSection
 import components.sineGraph
 import components.slider
 import el
@@ -48,36 +49,9 @@ fun shieldsView() {
 }
 
 fun TagConsumer<HTMLElement>.shieldSection(direction: Direction, offset: Int) {
-    lateinit var graph: SineGraph
     val shield = GameState.shields[direction]!!
-    div("shield-section") {
-        val directionName = direction.name.lowercase()
-        id = "$directionName-shield-frequency-section"
-
-        h3("shield-header") { +"${directionName.capitalize()} Shields" }
-
-        div("shield-top-section") {
-            //TODO - make analog and maybe make both sliders drag on canvas
-            div("shield-amplitude") {
-                p { +"Amplitude" }
-                slider("$directionName-amplitude", 0, 10, shield.amplitude, { 10 - it }, vertical = true) {
-                    graph.amplitude = it
-                    GameState.shields[direction]!!.amplitude = it
-                    wsSend(ShieldsUpdate(GameState.shields))
-                }
-            }
-            graph = sineGraph("$directionName-shield-frequency", "shield-frequency-wrapper", shield.amplitude, shield.frequency, offset)
-        }
-        div("shield-frequency") {
-            p { +"Frequency" }
-            slider("$directionName-frequency", 1, 5, shield.frequency) {
-                graph.frequency = it
-                GameState.shields[direction]!!.frequency = it
-                wsSend(ShieldsUpdate(GameState.shields))
-            }
-        }
-    }
-    graphs[direction] = graph
+    val name = direction.name.lowercase()
+    graphs[direction] = graphSection(shield, name, "${name.capitalize()} Shields", offset)
 }
 
 fun updateShields() {
