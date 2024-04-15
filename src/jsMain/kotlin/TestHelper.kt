@@ -9,7 +9,7 @@ import views.*
 
 const val testing = true
 
-fun testView() = weaponsView()
+fun testView() = targetingView()
 
 private val testInputFrames: List<WSFrame> = listOf(
 //    MessageUpdate("Test scan message"),

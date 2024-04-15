@@ -12,7 +12,7 @@ import org.w3c.dom.HTMLElement
 import replaceElement
 import sparks
 
-fun weaponsShake() = listOf("helm-readout", "helm-controls", "ship-position-display")
+fun weaponsShake() = listOf("phasors", "torpedoes")
 
 fun weaponsView() {
     GameState.setCurrent(View.WEAPONS)
@@ -23,50 +23,11 @@ fun weaponsView() {
             h1 { +"Weapons" }
             crewmanTitle()
             div("security") {
-                targeting()
-                weapons()
-            }
-        }
-    }
-}
-
-private fun DIV.targeting() {
-    div {
-        id = "targeting"
-        h2 { +"Targeting" }
-        p {
-            id = "targeted-square"
-            +"Targeting (0,0)"
-        }
-        p {
-            id = "targeted-lock"
-            +"NO LOCK"
-        }
-        table {
-            id = "targeting-table"
-            val max = 7
-            val offset = 4
-            (0..max).forEach { y ->
-                tr("helm-table-row") {
-                    (0..max).forEach { x ->
-                        when {
-                            x + y == 0 -> td { }
-                            x == 0 -> td("helm-table-heading") { +"${y - offset}" }
-                            y == 0 -> td("helm-table-heading") { +"${x - offset}" }
-                            x == offset && y == offset -> {
-                                td {
-                                    img(classes = "role-select-img") {
-                                        src = "assets/icons/helm.svg"
-                                    }
-                                }
-                            }
-
-                            else -> td("helm-table-col") {
-                                onClickFunction = { targetSquare(x - offset, y - offset) }
-                            }
-                        }
-                    }
+                p {
+                    id = "targeted-lock"
+                    +"NO LOCK"
                 }
+                weapons()
             }
         }
     }
@@ -75,20 +36,22 @@ private fun DIV.targeting() {
 private fun TagConsumer<HTMLElement>.weapons() {
     div {
         id = "weapons"
-        h2 { +"Phasors" }
-        val phasor = Wave()
-        graphSection(phasor, "phasors", "Phasors", 0)
-        h2 { +"Torpedoes" }
-        p {
-            id = "torpedo-display"
-            +"Ammo: 10/10"
+        div {
+            id = "phasors"
+            h2 { +"Phasors" }
+            val phasor = Wave()
+            graphSection(phasor, "phasors", "Phasors", 0)
         }
-        button {
-            +"FIRE"
+        div {
+            id = "torpedoes"
+            h2 { +"Torpedoes" }
+            p {
+                id = "torpedo-display"
+                +"Ammo: 10/10"
+            }
+            button {
+                +"FIRE"
+            }
         }
     }
-}
-
-private fun targetSquare(x: Int, y: Int) {
-    el("targeted-square").innerText = "Targeting ($x,$y)"
 }

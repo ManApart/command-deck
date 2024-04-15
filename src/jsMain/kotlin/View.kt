@@ -8,11 +8,12 @@ enum class View(val system: ShipSystem, val getShakeables: () -> List<String> = 
     HELM(ShipSystem.WARP_CORE, ::helmShake),
     LIFE_SIGNS(ShipSystem.MED_BAY, ::lifeSignsShake),
     MED_BAY(ShipSystem.MED_BAY),
-    WEAPONS(ShipSystem.WEAPONS, ::weaponsShake),
     SCIENCE(ShipSystem.SENSORS, ::scienceShake),
     SHIELDS(ShipSystem.SHIELDS, ::shieldsShake),
     READY_ROOM(ShipSystem.NONE),
     ROOM(ShipSystem.NONE, ::roomShake),
     ROOM_MANAGER(ShipSystem.NONE),
     TURBO_LIFT(ShipSystem.NONE, ::turboLiftShake),
+    TARGETING(ShipSystem.WEAPONS, ::targetingShake),
+    WEAPONS(ShipSystem.WEAPONS, ::weaponsShake),
 }
